@@ -5,11 +5,7 @@ const prisma = new PrismaClient();
 
 exports.getCarTypes = async (name, capacity) => {
   // Define query here
-  let query = {
-    include: {
-      cars: true,
-    },
-  };
+  let query = {};
 
   // It will generate the query
   let orQuery = [];
@@ -44,9 +40,6 @@ exports.getCarTypeById = async (id) => {
     where: {
       id: BigInt(id),
     },
-    include: {
-      cars: true,
-    },
   });
 
   // Convert BigInt fields to string for safe seralization
@@ -57,9 +50,6 @@ exports.getCarTypeById = async (id) => {
 exports.createCarType = async (data) => {
   const newCarType = await prisma.types.create({
     data,
-    include: {
-      cars: true,
-    },
   });
 
   // Convert BigInt fields to string for safe serialization
@@ -70,9 +60,6 @@ exports.createCarType = async (data) => {
 exports.updateCarType = async (id, data) => {
   const updatedCarType = await prisma.types.update({
     where: { id },
-    include: {
-      cars: true,
-    },
     data,
   });
 
@@ -84,9 +71,6 @@ exports.updateCarType = async (id, data) => {
 exports.deleteCarTypeById = async (id) => {
   const deletedCarType = await prisma.types.delete({
     where: { id },
-    include: {
-      cars: true,
-    },
   });
 
   // Convert BigInt fields to string for safe serialization
