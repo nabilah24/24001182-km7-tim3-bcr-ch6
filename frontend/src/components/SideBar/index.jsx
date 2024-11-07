@@ -1,115 +1,97 @@
 import React, { useState } from "react";
-import { Nav, Tooltip, OverlayTrigger, Dropdown, Image } from "react-bootstrap";
+import {
+  Nav,
+  Tooltip,
+  OverlayTrigger,
+  Dropdown,
+  Image,
+  Row,
+  Container,
+  Col,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCarSide } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCarSide,
+  faGear,
+  faGears,
+  faIndustry,
+  faWrench,
+} from "@fortawesome/free-solid-svg-icons";
 
-function Sidebar() {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const renderTooltip = (props, message) => (
-    <Tooltip id="button-tooltip" {...props}>
-      {message}
-    </Tooltip>
-  );
-
+const SideBar = ({ children }) => {
   return (
-    <div
-      className="d-flex align-items-center flex-column flex-shrink-0"
-      style={{ width: "4.5rem" }}
-    >
-      <div>
-        <a
-          href="/"
-          className="d-block p-3 link-body-emphasis text-decoration-none fw-semibold"
-        >
-          <span>BCR</span>
-        </a>
-      </div>
-
-      <Nav className="nav-pills nav-flush flex-column mb-auto text-center">
-        <Nav.Item>
-          <Nav.Link
-            href="#"
-            className="nav-link active py-3 border-bottom rounded-0"
-            aria-current="page"
-          >
-            <FontAwesomeIcon icon={faCarSide} className="fa-lg" />
-            Cars
-          </Nav.Link>
-        </Nav.Item>
-
-        <Nav.Item>
-          <Nav.Link
-            href="#"
-            className="nav-link py-3 border-bottom rounded-0"
-          ></Nav.Link>
-        </Nav.Item>
-
-        <Nav.Item>
-          <OverlayTrigger
-            placement="right"
-            overlay={(props) => renderTooltip(props, "Orders")}
-          >
-            <Nav.Link
-              href="#"
-              className="nav-link py-3 border-bottom rounded-0"
-            ></Nav.Link>
-          </OverlayTrigger>
-        </Nav.Item>
-
-        <Nav.Item>
-          <OverlayTrigger
-            placement="right"
-            overlay={(props) => renderTooltip(props, "Products")}
-          >
-            <Nav.Link
-              href="#"
-              className="nav-link py-3 border-bottom rounded-0"
-            ></Nav.Link>
-          </OverlayTrigger>
-        </Nav.Item>
-
-        <Nav.Item>
-          <OverlayTrigger
-            placement="right"
-            overlay={(props) => renderTooltip(props, "Customers")}
-          >
-            <Nav.Link
-              href="#"
-              className="nav-link py-3 border-bottom rounded-0"
-            ></Nav.Link>
-          </OverlayTrigger>
-        </Nav.Item>
-      </Nav>
-
-      <Dropdown
-        className="border-top"
-        show={dropdownOpen}
-        onToggle={() => setDropdownOpen(!dropdownOpen)}
-      >
-        <Dropdown.Toggle
-          variant="link"
-          className="d-flex align-items-center justify-content-center p-3 link-body-emphasis text-decoration-none"
-        >
-          <Image
-            src="https://github.com/mdo.png"
-            roundedCircle
-            width="24"
-            height="24"
-            alt="mdo"
-          />
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu align="end" className="text-small shadow">
-          <Dropdown.Item href="#">New project...</Dropdown.Item>
-          <Dropdown.Item href="#">Settings</Dropdown.Item>
-          <Dropdown.Item href="#">Profile</Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item href="#">Sign out</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </div>
+    <Container className="position-absolute" fluid>
+      <Row>
+        <Col className="col-sm-auto sticky-top bg-primary p-0 pb-5">
+          <div className="d-flex flex-sm-column flex-row flex-nowrap align-items-center sticky-top">
+            <div
+              style={{
+                width: "50px",
+                height: "30px",
+                backgroundColor: "#CFD4ED",
+              }}
+              className="my-3"
+            ></div>
+            <a
+              href="/"
+              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
+              title="Cars"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              data-bs-original-title="Icon-only"
+            >
+              <FontAwesomeIcon icon={faCarSide} className="fa-lg text-white" />
+              Cars
+            </a>
+            <a
+              href="/"
+              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
+              title="Models"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              data-bs-original-title="Icon-only"
+            >
+              <FontAwesomeIcon icon={faGear} className="fa-lg text-white" />
+              Models
+            </a>
+            <a
+              href="/"
+              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
+              title="Manufactures"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              data-bs-original-title="Icon-only"
+            >
+              <FontAwesomeIcon icon={faIndustry} className="fa-lg text-white" />
+              Manufactures
+            </a>
+            <a
+              href="/"
+              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
+              title="Transmissions"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              data-bs-original-title="Icon-only"
+            >
+              <FontAwesomeIcon icon={faWrench} className="fa-lg text-white" />
+              Transmissions
+            </a>
+            <a
+              href="/"
+              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
+              title="Types"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              data-bs-original-title="Icon-only"
+            >
+              <FontAwesomeIcon icon={faGears} className="fa-lg text-white" />
+              Types
+            </a>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
-}
+};
 
-export default Sidebar;
+export default SideBar;
