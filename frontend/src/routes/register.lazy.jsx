@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { useSelector } from "react-redux";
-import { register } from "../service/auth";
+import { register } from "../services/auth";
 import { toast } from "react-toastify";
 
 export const Route = createLazyFileRoute("/register")({

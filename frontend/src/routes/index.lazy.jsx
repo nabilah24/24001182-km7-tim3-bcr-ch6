@@ -1,17 +1,27 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
+import Button from "react-bootstrap/Button";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import CarCard from "../components/CarCard";
 
 export const Route = createLazyFileRoute("/")({
-  component: Index,
+    component: Index,
 });
 
 function Index() {
-  <Row className="bg-body-tertiary">
-    <div>Hi</div>
-    <CarCard />
-  </Row>;
+
+    const { token } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
+
+   useEffect(() => {
+        // Check if there any token
+        if (!token) {
+            navigate({ to: "/login" });
+        }
+    }, [navigate, token]);
+
+    return (
+        <div className="p-2">
+            <h3>Welcome To Wakanda App!</h3>
+        </div>
+    );
 }

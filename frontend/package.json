@@ -18,11 +18,14 @@
     "@reduxjs/toolkit": "^2.3.0",
     "@tanstack/react-router": "^1.79.0",
     "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.5",
+    "react-confirm-alert": "^3.0.6",
     "react-dom": "^18.3.1",
     "react-redux": "^9.1.2",
-    "react-sweetalert2": "^0.6.0"
+    "react-sweetalert2": "^0.6.0",
+    "react-toastify": "^10.0.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
