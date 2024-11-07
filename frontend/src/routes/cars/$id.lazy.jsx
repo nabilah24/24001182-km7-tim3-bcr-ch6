@@ -8,11 +8,11 @@ import { deleteStudent, getDetailStudent } from "../../service/student";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 
-export const Route = createLazyFileRoute("/students/$id")({
-  component: StudentDetail,
+export const Route = createLazyFileRoute("/cars/$id")({
+  component: CarsDetail,
 });
 
-function StudentDetail() {
+function CarsDetail() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
 

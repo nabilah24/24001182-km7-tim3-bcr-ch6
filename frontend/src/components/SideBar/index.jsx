@@ -1,39 +1,115 @@
-import React from "react";
-import { Nav, Container } from "react-bootstrap";
-import { Link } from "@tanstack/react-router";
+import React, { useState } from "react";
+import { Nav, Tooltip, OverlayTrigger, Dropdown, Image } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCarSide } from "@fortawesome/free-solid-svg-icons";
 
-const SideBar = () => {
+function Sidebar() {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const renderTooltip = (props, message) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {message}
+    </Tooltip>
+  );
+
   return (
     <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        height: "100vh",
-        width: "200px",
-        backgroundColor: "#0D6EFD",
-        color: "white",
-        paddingTop: "20px",
-        zIndex: 1000,
-      }}
+      className="d-flex align-items-center flex-column flex-shrink-0"
+      style={{ width: "4.5rem" }}
     >
-      <Container fluid className="d-flex flex-column align-items-start px-3">
-        {/* Logo or Title */}
-        <Nav.Link as={Link} to="/">
-          <h5 className="text-white mb-4 text-center">BCR MANAGEMENT</h5>
-        </Nav.Link>
-        {/* Navigation Links */}
-        <Nav className="flex-column fw-semibold w-100">
-          <Nav.Link as={Link} to="/" className="text-white my-2">
-            <i className="bi bi-house-door-fill me-2"></i> Dashboard
+      <div>
+        <a
+          href="/"
+          className="d-block p-3 link-body-emphasis text-decoration-none fw-semibold"
+        >
+          <span>BCR</span>
+        </a>
+      </div>
+
+      <Nav className="nav-pills nav-flush flex-column mb-auto text-center">
+        <Nav.Item>
+          <Nav.Link
+            href="#"
+            className="nav-link active py-3 border-bottom rounded-0"
+            aria-current="page"
+          >
+            <FontAwesomeIcon icon={faCarSide} className="fa-lg" />
+            Cars
           </Nav.Link>
-          <Nav.Link as={Link} to="/cars" className="text-white my-2">
-            <i className="bi bi-car-front-fill me-2"></i> Cars List
-          </Nav.Link>
-        </Nav>
-      </Container>
+        </Nav.Item>
+
+        <Nav.Item>
+          <Nav.Link
+            href="#"
+            className="nav-link py-3 border-bottom rounded-0"
+          ></Nav.Link>
+        </Nav.Item>
+
+        <Nav.Item>
+          <OverlayTrigger
+            placement="right"
+            overlay={(props) => renderTooltip(props, "Orders")}
+          >
+            <Nav.Link
+              href="#"
+              className="nav-link py-3 border-bottom rounded-0"
+            ></Nav.Link>
+          </OverlayTrigger>
+        </Nav.Item>
+
+        <Nav.Item>
+          <OverlayTrigger
+            placement="right"
+            overlay={(props) => renderTooltip(props, "Products")}
+          >
+            <Nav.Link
+              href="#"
+              className="nav-link py-3 border-bottom rounded-0"
+            ></Nav.Link>
+          </OverlayTrigger>
+        </Nav.Item>
+
+        <Nav.Item>
+          <OverlayTrigger
+            placement="right"
+            overlay={(props) => renderTooltip(props, "Customers")}
+          >
+            <Nav.Link
+              href="#"
+              className="nav-link py-3 border-bottom rounded-0"
+            ></Nav.Link>
+          </OverlayTrigger>
+        </Nav.Item>
+      </Nav>
+
+      <Dropdown
+        className="border-top"
+        show={dropdownOpen}
+        onToggle={() => setDropdownOpen(!dropdownOpen)}
+      >
+        <Dropdown.Toggle
+          variant="link"
+          className="d-flex align-items-center justify-content-center p-3 link-body-emphasis text-decoration-none"
+        >
+          <Image
+            src="https://github.com/mdo.png"
+            roundedCircle
+            width="24"
+            height="24"
+            alt="mdo"
+          />
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu align="end" className="text-small shadow">
+          <Dropdown.Item href="#">New project...</Dropdown.Item>
+          <Dropdown.Item href="#">Settings</Dropdown.Item>
+          <Dropdown.Item href="#">Profile</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item href="#">Sign out</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </div>
   );
-};
+}
 
-export default SideBar;
+export default Sidebar;
