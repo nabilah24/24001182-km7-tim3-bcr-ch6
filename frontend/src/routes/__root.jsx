@@ -17,7 +17,9 @@ export const Route = createRootRoute({
         {showNavAndSidebar ? (
           <>
             <NavBar />
-            <SideBar />
+            <SideBar>
+              <Outlet />
+            </SideBar>
           </>
         ) : (
           <Outlet />
