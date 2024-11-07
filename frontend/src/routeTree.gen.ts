@@ -16,7 +16,6 @@ import { Route as rootRoute } from "./routes/__root";
 
 // Create Virtual Routes
 
-const RegisterLazyImport = createFileRoute("/register")();
 const ProfileLazyImport = createFileRoute("/profile")();
 const LoginLazyImport = createFileRoute("/login")();
 const IndexLazyImport = createFileRoute("/")();
@@ -25,12 +24,6 @@ const CarsIdLazyImport = createFileRoute("/cars/$id")();
 const CarsEditIdLazyImport = createFileRoute("/cars/edit/$id")();
 
 // Create/Update Routes
-
-const RegisterLazyRoute = RegisterLazyImport.update({
-  id: "/register",
-  path: "/register",
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import("./routes/register.lazy").then((d) => d.Route));
 
 const ProfileLazyRoute = ProfileLazyImport.update({
   id: "/profile",
@@ -95,13 +88,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof ProfileLazyImport;
       parentRoute: typeof rootRoute;
     };
-    "/register": {
-      id: "/register";
-      path: "/register";
-      fullPath: "/register";
-      preLoaderRoute: typeof RegisterLazyImport;
-      parentRoute: typeof rootRoute;
-    };
     "/cars/$id": {
       id: "/cars/$id";
       path: "/cars/$id";
@@ -132,7 +118,6 @@ export interface FileRoutesByFullPath {
   "/": typeof IndexLazyRoute;
   "/login": typeof LoginLazyRoute;
   "/profile": typeof ProfileLazyRoute;
-  "/register": typeof RegisterLazyRoute;
   "/cars/$id": typeof CarsIdLazyRoute;
   "/cars/create": typeof CarsCreateLazyRoute;
   "/cars/edit/$id": typeof CarsEditIdLazyRoute;
@@ -142,7 +127,6 @@ export interface FileRoutesByTo {
   "/": typeof IndexLazyRoute;
   "/login": typeof LoginLazyRoute;
   "/profile": typeof ProfileLazyRoute;
-  "/register": typeof RegisterLazyRoute;
   "/cars/$id": typeof CarsIdLazyRoute;
   "/cars/create": typeof CarsCreateLazyRoute;
   "/cars/edit/$id": typeof CarsEditIdLazyRoute;
@@ -153,7 +137,6 @@ export interface FileRoutesById {
   "/": typeof IndexLazyRoute;
   "/login": typeof LoginLazyRoute;
   "/profile": typeof ProfileLazyRoute;
-  "/register": typeof RegisterLazyRoute;
   "/cars/$id": typeof CarsIdLazyRoute;
   "/cars/create": typeof CarsCreateLazyRoute;
   "/cars/edit/$id": typeof CarsEditIdLazyRoute;
@@ -165,7 +148,6 @@ export interface FileRouteTypes {
     | "/"
     | "/login"
     | "/profile"
-    | "/register"
     | "/cars/$id"
     | "/cars/create"
     | "/cars/edit/$id";
@@ -174,7 +156,6 @@ export interface FileRouteTypes {
     | "/"
     | "/login"
     | "/profile"
-    | "/register"
     | "/cars/$id"
     | "/cars/create"
     | "/cars/edit/$id";
@@ -183,7 +164,6 @@ export interface FileRouteTypes {
     | "/"
     | "/login"
     | "/profile"
-    | "/register"
     | "/cars/$id"
     | "/cars/create"
     | "/cars/edit/$id";
@@ -194,7 +174,6 @@ export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute;
   LoginLazyRoute: typeof LoginLazyRoute;
   ProfileLazyRoute: typeof ProfileLazyRoute;
-  RegisterLazyRoute: typeof RegisterLazyRoute;
   CarsIdLazyRoute: typeof CarsIdLazyRoute;
   CarsCreateLazyRoute: typeof CarsCreateLazyRoute;
   CarsEditIdLazyRoute: typeof CarsEditIdLazyRoute;
@@ -204,7 +183,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   LoginLazyRoute: LoginLazyRoute,
   ProfileLazyRoute: ProfileLazyRoute,
-  RegisterLazyRoute: RegisterLazyRoute,
   CarsIdLazyRoute: CarsIdLazyRoute,
   CarsCreateLazyRoute: CarsCreateLazyRoute,
   CarsEditIdLazyRoute: CarsEditIdLazyRoute,
@@ -225,7 +203,6 @@ export const routeTree = rootRoute
         "/",
         "/login",
         "/profile",
-        "/register",
         "/cars/$id",
         "/cars/create",
         "/cars/edit/$id"
@@ -239,9 +216,6 @@ export const routeTree = rootRoute
     },
     "/profile": {
       "filePath": "profile.lazy.jsx"
-    },
-    "/register": {
-      "filePath": "register.lazy.jsx"
     },
     "/cars/$id": {
       "filePath": "cars/$id.lazy.jsx"

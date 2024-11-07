@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -8,8 +9,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../../redux/slices/auth";
 import { profile } from "../../services/auth";
+import SideBar from "../SideBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-const NavigationBar = () => {
+const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,7 +25,7 @@ const NavigationBar = () => {
       const result = await profile();
       if (result.success) {
         // set the user state here
-        dispatch(setUser(result.message));
+        dispatch(setUser(result.data));
         return;
       }
 
@@ -53,13 +57,22 @@ const NavigationBar = () => {
 
   return (
     <div>
+      <SideBar />
+
       <Navbar
         collapseOnSelect
         expand="lg"
-        className="bg-body-primary"
-        style={{ backgroundColor: "#B7B7B7" }}
+        className="bg-body-primary shadow-sm"
       >
         <Container>
+          <div
+            style={{
+              width: "100px",
+              height: "30px",
+              backgroundColor: "#CFD4ED",
+              marginLeft: "6vw",
+            }}
+          ></div>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
@@ -74,7 +87,7 @@ const NavigationBar = () => {
                 <>
                   <Nav.Link as={Link} to="/profile">
                     <Image
-                      src={user?.profile_picture}
+                      src={user?.profilePicture}
                       fluid
                       style={{
                         width: "30px",
@@ -83,10 +96,18 @@ const NavigationBar = () => {
                         overflow: "hidden",
                         borderRadius: "50%",
                       }}
-                    />{" "}
-                    {user?.name}
+                    />
                   </Nav.Link>
-                  <Nav.Link onClick={logout}>Logout</Nav.Link>
+                  <NavDropdown title={user?.name} id="nav-dropdown">
+                    <NavDropdown.Item eventKey="4.1">
+                      <Nav.Link as={Link} to="/profile">
+                        Profile
+                      </Nav.Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item eventKey="4.1">
+                      <Nav.Link onClick={logout}>Logout</Nav.Link>
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               ) : (
                 <></>
@@ -98,24 +119,5 @@ const NavigationBar = () => {
     </div>
   );
 };
-function Sidebar() {
-  return (
-    <div
-      style={{
-        width: "250px",
-        background: "#0D6EFD",
-        color: "white",
-        minHeight: "100vh",
-      }}
-    >
-      <Nav defaultActiveKey="/home" className="flex-column p-3">
-        <h4>Dashboard</h4>
-        <Nav.Link href="#cars" className="text-white">
-          Cars
-        </Nav.Link>
-      </Nav>
-    </div>
-  );
-}
 
-export default NavigationBar;
+export default NavBar;

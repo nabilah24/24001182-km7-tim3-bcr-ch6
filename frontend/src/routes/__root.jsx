@@ -15,12 +15,10 @@ export const Route = createRootRoute({
       <>
         {/* Conditionally render NavBar and SideBar */}
         {showNavAndSidebar ? (
-          <>
+          <div>
             <NavBar />
-            <SideBar>
-              <Outlet />
-            </SideBar>
-          </>
+            <Outlet />
+          </div>
         ) : (
           <Outlet />
         )}
