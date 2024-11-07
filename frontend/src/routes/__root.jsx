@@ -14,17 +14,16 @@ export const Route = createRootRoute({
     return (
       <>
         {/* Conditionally render NavBar and SideBar */}
-        {showNavAndSidebar && (
+        {showNavAndSidebar ? (
           <>
             <NavBar />
-            <SideBar />
+            <SideBar >
+              <Outlet />
+            </SideBar>
           </>
-        )}
-
-        <Container>
-          {/* Outlet renders the component based on the current route */}
+        ):(
           <Outlet />
-        </Container>
+        )}
 
         {/* Debugging tool for router */}
         <TanStackRouterDevtools />

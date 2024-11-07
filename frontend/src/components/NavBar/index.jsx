@@ -3,10 +3,12 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../../redux/slices/auth";
 import { profile } from "../../services/auth";
+
 
 
 const NavigationBar = () => {
@@ -67,21 +69,14 @@ const NavigationBar = () => {
                     <Nav>
                         {user ? (
                             <>
-                                <Nav.Link as={Link} to="/profile">
-                                    <Image
-                                        src={user?.profile_picture}
-                                        fluid
-                                        style={{
-                                            width: "30px",
-                                            height: "30px",
-                                            display: "inline-block",
-                                            overflow: "hidden",
-                                            borderRadius: "50%",
-                                        }}
-                                    />{" "}
-                                    {user?.name}
-                                </Nav.Link>
-                                <Nav.Link onClick={logout}>Logout</Nav.Link>
+                                <NavDropdown title={user?.name} id="navbarScrollingDropdown">
+                                    <NavDropdown.Item as={Link} to="/profile">
+                                            Profile
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item 
+                                        onClick={logout}>Logout
+                                    </NavDropdown.Item>
+                                </NavDropdown>
                             </>
                         ) : (
                             <>
@@ -94,15 +89,5 @@ const NavigationBar = () => {
         </div>
     );
 };
-function Sidebar() {
-  return (
-    <div style={{ width: '250px', background: '#0D6EFD', color: 'white', minHeight: '100vh' }}>
-      <Nav defaultActiveKey="/home" className="flex-column p-3">
-        <h4>Dashboard</h4>
-        <Nav.Link href="#cars" className="text-white">Cars</Nav.Link>
-      </Nav>
-    </div>
-  );
-}
 
 export default NavigationBar;
