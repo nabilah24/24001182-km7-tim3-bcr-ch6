@@ -11,6 +11,7 @@ const createToken = (user) => {
 };
 
 exports.register = async (data, file) => {
+  // if there are any file (profile picture)
   if (file.profilePicture) {
     data.profilePicture = await imageUpload(file.profilePicture);
   }

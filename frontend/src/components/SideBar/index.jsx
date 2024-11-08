@@ -1,61 +1,66 @@
 import React from "react";
-import { Nav, Container } from "react-bootstrap";
 import { Link } from "@tanstack/react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { 
+  faWrench,
+  faHome,
+  faCarSide,
+  faGear,
+  faGears,
+  faIndustry,
+} from "@fortawesome/free-solid-svg-icons";
 
-
-const SideBar = ({children}) => {
+const SideBar = ({ children }) => {
   return (
     <div className="container-fluid">
-    <div className="row">
-        <div className="col-sm-auto bg-light sticky-top">
-            <div className="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
-                <a href="/" className="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
-                    <i className="bi-bootstrap fs-1"></i>
-                </a>
-                <ul className="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
-                    <li className="nav-item">
-                        <a href="#" className="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                            <i className="bi-house fs-1"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
-                            <i className="bi-speedometer2 fs-1"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-                            <i className="bi-table fs-1"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
-                            <i className="bi-heart fs-1"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Customers">
-                            <i className="bi-people fs-1"></i>
-                        </a>
-                    </li>
-                </ul>
-                <div className="dropdown">
-                    <a href="#" className="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i className="bi-person-circle h2"></i>
-                    </a>
-                    <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-                        <li><a className="dropdown-item" href="#">New project...</a></li>
-                        <li><a className="dropdown-item" href="#">Settings</a></li>
-                        <li><a className="dropdown-item" href="#">Profile</a></li>
-                    </ul>
-                </div>
-            </div>
+      <div className="row flex-nowrap">
+        <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+          <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+            <Link
+              to="/"
+              className="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+            >
+              <span className="fs-5 d-none d-sm-inline">Menu</span>
+            </Link>
+            <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+              <li className="nav-item my-2">
+                <Link to="/" className="nav-link align-middle px-0 text-white">
+                  <FontAwesomeIcon icon={faHome} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Home</span>
+                </Link>
+              </li>
+              <li className="my-2">
+                <Link to="/models" className="nav-link px-0 align-middle text-white">
+                  <FontAwesomeIcon icon={faGear} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Models</span>
+                </Link>
+              </li>
+              <li className="my-2">
+                <Link to="/cars" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
+                  <FontAwesomeIcon icon={faCarSide} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Cars</span>
+                </Link>
+              </li>
+              <li className="my-2">
+                <Link to="/types" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
+                  <FontAwesomeIcon icon={faGears} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Transmission</span>
+                </Link>
+              </li>
+              <li className="my-2">
+                <Link to="/manufactures" className="nav-link px-0 align-middle text-white">
+                  <FontAwesomeIcon icon={faIndustry} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Manufactures</span>
+                </Link>
+              </li>
+              <li className="my-2">
+                <Link to="/transmissions" className="nav-link px-0 align-middle text-white">
+                  <FontAwesomeIcon icon={faWrench} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Transmissions</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="col-sm p-3 min-vh-100">
-            {children}
+        <div className="col py-3">
+          {children}
         </div>
+      </div>
     </div>
-</div>
   );
 };
 

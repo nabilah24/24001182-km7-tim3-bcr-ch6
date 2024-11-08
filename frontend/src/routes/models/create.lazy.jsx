@@ -1,34 +1,31 @@
 import { createLazyFileRoute, useNavigate } from '@tanstack/react-router'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
-import { getUniversities } from '../../../service/university'
-import { getClasses } from '../../../service/class'
-import { getDetailStudent, updateStudent } from '../../../service/student'
+import { getUniversities } from '../../service/university'
+import { getClasses } from '../../service/class'
+import { createStudent } from '../../service/student'
 import { toast } from 'react-toastify'
 
-export const Route = createLazyFileRoute('/student/edit/$id')({
-  component: EditStudent,
+export const Route = createLazyFileRoute('/models/create')({
+  component: CreateStudent,
 })
 
-function EditStudent() {
-  const { id } = Route.useParams()
+function CreateStudent() {
   const navigate = useNavigate()
 
   const [name, setName] = useState('')
   const [nickName, setNickName] = useState('')
-  const [currentProfilePicture, setCurrentProfilePicture] = useState('')
   const [profilePicture, setProfilePicture] = useState(undefined)
+  const [currentProfilePicture, setCurrentProfilePicture] = useState(undefined)
   const [universities, setUniversities] = useState([])
   const [universityId, setUniversityId] = useState(0)
   const [classes, setClasses] = useState([])
   const [classId, setClassId] = useState(0)
-  const [isNotFound, setIsNotFound] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const getUniversitiesData = async () => {
@@ -48,33 +45,6 @@ function EditStudent() {
     getClassesData()
   }, [])
 
-  useEffect(() => {
-    const getDetailStudentData = async (id) => {
-      setIsLoading(true)
-      const result = await getDetailStudent(id)
-      if (result?.success) {
-        setName(result.data?.name)
-        setNickName(result.data?.nick_name)
-        setUniversityId(result.data?.university_id)
-        setClassId(result.data?.class_id)
-        setCurrentProfilePicture(result.data?.profile_picture)
-        setIsNotFound(false)
-      } else {
-        setIsNotFound(true)
-      }
-      setIsLoading(false)
-    }
-
-    if (id) {
-      getDetailStudentData(id)
-    }
-  }, [id])
-
-  if (isNotFound) {
-    navigate({ to: '/' })
-    return
-  }
-
   const onSubmit = async (event) => {
     event.preventDefault()
 
@@ -85,9 +55,9 @@ function EditStudent() {
       universityId,
       profilePicture,
     }
-    const result = await updateStudent(id, request)
+    const result = await createStudent(request)
     if (result?.success) {
-      navigate({ to: `/students/${id}` })
+      navigate({ to: '/' })
       return
     }
 
@@ -98,7 +68,7 @@ function EditStudent() {
     <Row className="mt-5">
       <Col className="offset-md-3">
         <Card>
-          <Card.Header className="text-center">Edit Student</Card.Header>
+          <Card.Header className="text-center">Create Student</Card.Header>
           <Card.Body>
             <Form onSubmit={onSubmit}>
               <Form.Group as={Row} className="mb-3" controlId="name">
@@ -142,16 +112,13 @@ function EditStudent() {
                     aria-label="Default select example"
                     onChange={(event) => setUniversityId(event.target.value)}
                   >
-                    <option disabled>Select University</option>
-                    {!isLoading &&
-                      universities.length > 0 &&
+                    <option disabled selected>
+                      Select University
+                    </option>
+                    {universities.length > 0 &&
                       universities.map((university) => (
-                        <option
-                          key={university.id}
-                          value={university.id}
-                          selected={university.id == universityId}
-                        >
-                          {university.name}
+                        <option key={university?.id} value={university?.id}>
+                          {university?.name}
                         </option>
                       ))}
                   </Form.Select>
@@ -166,16 +133,13 @@ function EditStudent() {
                     aria-label="Default select example"
                     onChange={(event) => setClassId(event.target.value)}
                   >
-                    <option disabled>Select Class</option>
-                    {!isLoading &&
-                      classes.length > 0 &&
+                    <option disabled selected>
+                      Select Class
+                    </option>
+                    {classes.length > 0 &&
                       classes.map((c) => (
-                        <option
-                          key={c.id}
-                          value={c.id}
-                          selected={c.id == classId}
-                        >
-                          {c.class}
+                        <option key={c?.id} value={c?.id}>
+                          {c?.class}
                         </option>
                       ))}
                   </Form.Select>
@@ -189,6 +153,7 @@ function EditStudent() {
                   <Form.Control
                     type="file"
                     placeholder="Choose File"
+                    required
                     onChange={(event) => {
                       setProfilePicture(event.target.files[0])
                       setCurrentProfilePicture(
@@ -207,7 +172,7 @@ function EditStudent() {
               </Form.Group>
               <div className="d-grid gap-2">
                 <Button type="submit" variant="primary">
-                  Edit Student
+                  Create Student
                 </Button>
               </div>
             </Form>
