@@ -36,7 +36,7 @@ export const createTransmission = async (request) => {
 
   const formData = new FormData();
   formData.append("name", request.name);
-  formData.append("country", request.country);
+  formData.append("driveType", request.driveType);
   formData.append("description", request.description);
 
   const response = await fetch(`${import.meta.env.VITE_API_URL}/transmissions`, {
@@ -52,19 +52,19 @@ export const createTransmission = async (request) => {
   return result;
 };
 
-export const updateTransmission = async (request) => {
+export const updateTransmission = async (id, request) => {
   const token = localStorage.getItem("token");
 
   const formData = new FormData();
   formData.append("name", request.name);
-  formData.append("country", request.country);
+  formData.append("driveType", request.driveType);
   formData.append("description", request.description);
 
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/transmissions`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/transmissions/${id}`, {
       headers: {
           authorization: `Bearer ${token}`,
       },
-      method: "POST",
+      method: "PUT",
       body: formData,
   });
 

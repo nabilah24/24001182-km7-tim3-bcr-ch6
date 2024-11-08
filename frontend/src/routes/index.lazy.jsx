@@ -21,7 +21,7 @@ function Index() {
   }, [navigate, token]);
 
   return (
-    <Container className="p-2 mt-2" style={{ marginLeft: "12vw" }}>
+    <>
       <BreadCrumb />
       <Row className="d-flex ">
         <Col>
@@ -31,6 +31,6 @@ function Index() {
           <Button variant="primary">Primary</Button>
         </Col>
       </Row>
-    </Container>
+    </>
   );
 }

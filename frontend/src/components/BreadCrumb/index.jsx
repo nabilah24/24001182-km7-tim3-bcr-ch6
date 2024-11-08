@@ -9,7 +9,7 @@ const BreadCrumb = () => {
       <Breadcrumb.Item as={Link} to="/">
         Home
       </Breadcrumb.Item>
-      <Breadcrumb.Item as={Link} to="/" active>
+      <Breadcrumb.Item as={Link} to="/cars" active>
         Cars
       </Breadcrumb.Item>
     </Breadcrumb>

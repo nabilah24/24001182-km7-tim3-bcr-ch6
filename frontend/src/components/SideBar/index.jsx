@@ -1,96 +1,66 @@
-import React, { useState } from "react";
-import {
-  Nav,
-  Tooltip,
-  OverlayTrigger,
-  Dropdown,
-  Image,
-  Row,
-  Container,
-  Col,
-} from "react-bootstrap";
+import React from "react";
+import { Link } from "@tanstack/react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
+import { 
+  faWrench,
+  faHome,
   faCarSide,
   faGear,
   faGears,
   faIndustry,
-  faWrench,
 } from "@fortawesome/free-solid-svg-icons";
 
 const SideBar = ({ children }) => {
   return (
-    <Container className="position-absolute" fluid>
-      <Row>
-        <Col className="col-sm-auto sticky-top bg-primary p-0 pb-5">
-          <div className="d-flex flex-sm-column flex-row flex-nowrap align-items-center sticky-top">
-            <div
-              style={{
-                width: "50px",
-                height: "30px",
-                backgroundColor: "#CFD4ED",
-              }}
-              className="my-3"
-            ></div>
-            <a
-              href="/"
-              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
-              title="Cars"
-              data-bs-toggle="tooltip"
-              data-bs-placement="right"
-              data-bs-original-title="Icon-only"
+    <div className="container-fluid">
+      <div className="row flex-nowrap">
+        <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+          <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+            <Link
+              to="/"
+              className="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
             >
-              <FontAwesomeIcon icon={faCarSide} className="fa-lg text-white" />
-              Cars
-            </a>
-            <a
-              href="/"
-              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
-              title="Models"
-              data-bs-toggle="tooltip"
-              data-bs-placement="right"
-              data-bs-original-title="Icon-only"
-            >
-              <FontAwesomeIcon icon={faGear} className="fa-lg text-white" />
-              Models
-            </a>
-            <a
-              href="/"
-              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
-              title="Manufactures"
-              data-bs-toggle="tooltip"
-              data-bs-placement="right"
-              data-bs-original-title="Icon-only"
-            >
-              <FontAwesomeIcon icon={faIndustry} className="fa-lg text-white" />
-              Manufactures
-            </a>
-            <a
-              href="/"
-              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
-              title="Transmissions"
-              data-bs-toggle="tooltip"
-              data-bs-placement="right"
-              data-bs-original-title="Icon-only"
-            >
-              <FontAwesomeIcon icon={faWrench} className="fa-lg text-white" />
-              Transmissions
-            </a>
-            <a
-              href="/"
-              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
-              title="Types"
-              data-bs-toggle="tooltip"
-              data-bs-placement="right"
-              data-bs-original-title="Icon-only"
-            >
-              <FontAwesomeIcon icon={faGears} className="fa-lg text-white" />
-              Types
-            </a>
+              <span className="fs-5 d-none d-sm-inline">Menu</span>
+            </Link>
+            <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+              <li className="nav-item my-2">
+                <Link to="/" className="nav-link align-middle px-0 text-white">
+                  <FontAwesomeIcon icon={faHome} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Home</span>
+                </Link>
+              </li>
+              <li className="my-2">
+                <Link to="/models" className="nav-link px-0 align-middle text-white">
+                  <FontAwesomeIcon icon={faGear} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Models</span>
+                </Link>
+              </li>
+              <li className="my-2">
+                <Link to="/cars" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
+                  <FontAwesomeIcon icon={faCarSide} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Cars</span>
+                </Link>
+              </li>
+              <li className="my-2">
+                <Link to="/types" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
+                  <FontAwesomeIcon icon={faGears} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Transmission</span>
+                </Link>
+              </li>
+              <li className="my-2">
+                <Link to="/manufactures" className="nav-link px-0 align-middle text-white">
+                  <FontAwesomeIcon icon={faIndustry} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Manufactures</span>
+                </Link>
+              </li>
+              <li className="my-2">
+                <Link to="/transmissions" className="nav-link px-0 align-middle text-white">
+                  <FontAwesomeIcon icon={faWrench} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Transmissions</span>
+                </Link>
+              </li>
+            </ul>
           </div>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+        <div className="col py-3">
+          {children}
+        </div>
+      </div>
+    </div>
   );
 };
 
