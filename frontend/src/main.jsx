@@ -7,6 +7,7 @@ import { store } from "./redux/store";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // Create a new router instance

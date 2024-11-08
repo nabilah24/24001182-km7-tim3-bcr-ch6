@@ -55,23 +55,16 @@ const NavBar = () => {
   };
 
   return (
-    <div>
-      <SideBar />
-
+    <>
       <Navbar
         collapseOnSelect
         expand="lg"
         className="bg-body-primary shadow-sm"
       >
         <Container>
-          <div
-            style={{
-              width: "100px",
-              height: "30px",
-              backgroundColor: "#CFD4ED",
-              marginLeft: "6vw",
-            }}
-          ></div>
+          <div className="text-body-secondary fs-4 fw-bold ">
+            BINAR CAR RENTAL
+          </div>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
@@ -115,7 +108,7 @@ const NavBar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </div>
+    </>
   );
 };
 

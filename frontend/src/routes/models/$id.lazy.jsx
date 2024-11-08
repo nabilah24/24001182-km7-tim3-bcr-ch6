@@ -1,12 +1,12 @@
-import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import { deleteStudent, getDetailStudent } from "../../service/student";
-import { toast } from "react-toastify";
-import { confirmAlert } from "react-confirm-alert";
+import { createLazyFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
+import { deleteStudent, getDetailStudent } from '../../service/student'
+import { toast } from 'react-toastify'
+import { confirmAlert } from 'react-confirm-alert'
 
 export const Route = createLazyFileRoute("/models/$id")({
   component: ModelsDetail,
@@ -16,27 +16,27 @@ function ModelsDetail() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
 
-  const [student, setStudent] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isNotFound, setIsNotFound] = useState(false);
+  const [student, setStudent] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isNotFound, setIsNotFound] = useState(false)
 
   useEffect(() => {
     const getDetailStudentData = async (id) => {
-      setIsLoading(true);
-      const result = await getDetailStudent(id);
+      setIsLoading(true)
+      const result = await getDetailStudent(id)
       if (result?.success) {
-        setStudent(result.data);
-        setIsNotFound(false);
+        setStudent(result.data)
+        setIsNotFound(false)
       } else {
-        setIsNotFound(true);
+        setIsNotFound(true)
       }
-      setIsLoading(false);
-    };
+      setIsLoading(false)
+    }
 
     if (id) {
-      getDetailStudentData(id);
+      getDetailStudentData(id)
     }
-  }, [id]);
+  }, [id])
 
   if (isLoading) {
     return (
@@ -45,7 +45,7 @@ function ModelsDetail() {
           <h1 className="text-center">Loading...</h1>
         </Col>
       </Row>
-    );
+    )
   }
 
   if (isNotFound) {
@@ -55,35 +55,35 @@ function ModelsDetail() {
           <h1 className="text-center">Student is not found!</h1>
         </Col>
       </Row>
-    );
+    )
   }
 
   const onDelete = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     confirmAlert({
-      title: "Confirm to delete",
-      message: "Are you sure to delete this data?",
+      title: 'Confirm to delete',
+      message: 'Are you sure to delete this data?',
       buttons: [
         {
-          label: "Yes",
+          label: 'Yes',
           onClick: async () => {
-            const result = await deleteStudent(id);
+            const result = await deleteStudent(id)
             if (result?.success) {
-              navigate({ to: "/" });
-              return;
+              navigate({ to: '/' })
+              return
             }
 
-            toast.error(result?.message);
+            toast.error(result?.message)
           },
         },
         {
-          label: "No",
+          label: 'No',
           onClick: () => {},
         },
       ],
-    });
-  };
+    })
+  }
 
   return (
     <Row className="mt-5">
@@ -119,5 +119,5 @@ function ModelsDetail() {
       </Col>
       <Col md={3}></Col>
     </Row>
-  );
+  )
 }

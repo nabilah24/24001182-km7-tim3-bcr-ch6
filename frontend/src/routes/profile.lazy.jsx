@@ -23,7 +23,7 @@ function Profile() {
     <Row className="mt-5">
       <Col className="offset-md-3">
         <Card>
-          <Card.Img variant="top" src={user?.profile_picture} />
+          <Card.Img variant="top" src={user?.profilePicture} />
           <Card.Body>
             <Card.Title>{user?.name}</Card.Title>
             <Card.Text>{user?.email}</Card.Text>
