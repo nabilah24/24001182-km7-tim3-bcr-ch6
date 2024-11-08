@@ -1,61 +1,65 @@
 import React from "react";
 import { Nav, Container } from "react-bootstrap";
 import { Link } from "@tanstack/react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faTachometerAlt, faTable, faHeart, faUsers } from "@fortawesome/free-solid-svg-icons";
 
-
-const SideBar = ({children}) => {
+const SideBar = ({ children }) => {
   return (
     <div className="container-fluid">
-    <div className="row">
+      <div className="row">
         <div className="col-sm-auto bg-light sticky-top">
-            <div className="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
-                <a href="/" className="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
-                    <i className="bi-bootstrap fs-1"></i>
-                </a>
-                <ul className="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
-                    <li className="nav-item">
-                        <a href="#" className="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                            <i className="bi-house fs-1"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
-                            <i className="bi-speedometer2 fs-1"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-                            <i className="bi-table fs-1"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
-                            <i className="bi-heart fs-1"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Customers">
-                            <i className="bi-people fs-1"></i>
-                        </a>
-                    </li>
-                </ul>
-                <div className="dropdown">
-                    <a href="#" className="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i className="bi-person-circle h2"></i>
-                    </a>
-                    <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-                        <li><a className="dropdown-item" href="#">New project...</a></li>
-                        <li><a className="dropdown-item" href="#">Settings</a></li>
-                        <li><a className="dropdown-item" href="#">Profile</a></li>
-                    </ul>
-                </div>
-            </div>
+          <div className="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
+            <Link
+              to="/"
+              className="d-block p-3 link-dark text-decoration-none"
+              title="Dashboard"
+            >
+              <FontAwesomeIcon icon={faHome} className="fs-1" />
+            </Link>
+            <ul className="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
+              <li>
+                <Link
+                  to="/dashboard"
+                  className="nav-link py-3 px-2"
+                  title="Dashboard"
+                >
+                  <FontAwesomeIcon icon={faTachometerAlt} className="fs-1" />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/orders"
+                  className="nav-link py-3 px-2"
+                  title="Orders"
+                >
+                  <FontAwesomeIcon icon={faTable} className="fs-1" />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/products"
+                  className="nav-link py-3 px-2"
+                  title="Products"
+                >
+                  <FontAwesomeIcon icon={faHeart} className="fs-1" />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/customers"
+                  className="nav-link py-3 px-2"
+                  title="Customers"
+                >
+                  <FontAwesomeIcon icon={faUsers} className="fs-1" />
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="col-sm p-3 min-vh-100">
-            {children}
-        </div>
+        <div className="col-sm p-3 min-vh-100">{children}</div>
+      </div>
     </div>
-</div>
   );
 };
 
