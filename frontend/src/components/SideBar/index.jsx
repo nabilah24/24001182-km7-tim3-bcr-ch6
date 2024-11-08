@@ -1,65 +1,96 @@
-import React from "react";
-import { Nav, Container } from "react-bootstrap";
-import { Link } from "@tanstack/react-router";
+import React, { useState } from "react";
+import {
+  Nav,
+  Tooltip,
+  OverlayTrigger,
+  Dropdown,
+  Image,
+  Row,
+  Container,
+  Col,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faTachometerAlt, faTable, faHeart, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCarSide,
+  faGear,
+  faGears,
+  faIndustry,
+  faWrench,
+} from "@fortawesome/free-solid-svg-icons";
 
 const SideBar = ({ children }) => {
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-auto bg-light sticky-top">
-          <div className="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
-            <Link
-              to="/"
-              className="d-block p-3 link-dark text-decoration-none"
-              title="Dashboard"
+    <Container className="position-absolute" fluid>
+      <Row>
+        <Col className="col-sm-auto sticky-top bg-primary p-0 pb-5">
+          <div className="d-flex flex-sm-column flex-row flex-nowrap align-items-center sticky-top">
+            <div
+              style={{
+                width: "50px",
+                height: "30px",
+                backgroundColor: "#CFD4ED",
+              }}
+              className="my-3"
+            ></div>
+            <a
+              href="/"
+              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
+              title="Cars"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              data-bs-original-title="Icon-only"
             >
-              <FontAwesomeIcon icon={faHome} className="fs-1" />
-            </Link>
-            <ul className="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
-              <li>
-                <Link
-                  to="/dashboard"
-                  className="nav-link py-3 px-2"
-                  title="Dashboard"
-                >
-                  <FontAwesomeIcon icon={faTachometerAlt} className="fs-1" />
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/orders"
-                  className="nav-link py-3 px-2"
-                  title="Orders"
-                >
-                  <FontAwesomeIcon icon={faTable} className="fs-1" />
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/products"
-                  className="nav-link py-3 px-2"
-                  title="Products"
-                >
-                  <FontAwesomeIcon icon={faHeart} className="fs-1" />
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/customers"
-                  className="nav-link py-3 px-2"
-                  title="Customers"
-                >
-                  <FontAwesomeIcon icon={faUsers} className="fs-1" />
-                </Link>
-              </li>
-            </ul>
+              <FontAwesomeIcon icon={faCarSide} className="fa-lg text-white" />
+              Cars
+            </a>
+            <a
+              href="/"
+              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
+              title="Models"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              data-bs-original-title="Icon-only"
+            >
+              <FontAwesomeIcon icon={faGear} className="fa-lg text-white" />
+              Models
+            </a>
+            <a
+              href="/"
+              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
+              title="Manufactures"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              data-bs-original-title="Icon-only"
+            >
+              <FontAwesomeIcon icon={faIndustry} className="fa-lg text-white" />
+              Manufactures
+            </a>
+            <a
+              href="/"
+              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
+              title="Transmissions"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              data-bs-original-title="Icon-only"
+            >
+              <FontAwesomeIcon icon={faWrench} className="fa-lg text-white" />
+              Transmissions
+            </a>
+            <a
+              href="/"
+              className="d-block p-3 link-dark text-decoration-none d-flex flex-column text-white align-items-center"
+              title="Types"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              data-bs-original-title="Icon-only"
+            >
+              <FontAwesomeIcon icon={faGears} className="fa-lg text-white" />
+              Types
+            </a>
           </div>
-        </div>
-        <div className="col-sm p-3 min-vh-100">{children}</div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
