@@ -88,7 +88,7 @@ function IndexTransmission() {
               <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Country</th>
+                <th>DriveType</th>
                 <th className="text-center">Description</th>
                 <th className="text-center">Action</th>
               </tr>
