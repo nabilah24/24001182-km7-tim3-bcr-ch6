@@ -22,6 +22,10 @@ const IndexLazyImport = createFileRoute("/")();
 const CarsCreateLazyImport = createFileRoute("/cars/create")();
 const CarsIdLazyImport = createFileRoute("/cars/$id")();
 const CarsEditIdLazyImport = createFileRoute("/cars/edit/$id")();
+const TypeCarsLazyImport = createFileRoute("/types")();
+const TypeCarsIdLazyImport = createFileRoute("/types/$id")();
+const TypeCarsCreateLazyImport = createFileRoute("/types/create")();
+const TypeCarsEditIdLazyImport = createFileRoute("/types/edit/$id")();
 
 // Create/Update Routes
 
@@ -61,6 +65,32 @@ const CarsEditIdLazyRoute = CarsEditIdLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import("./routes/cars/edit/$id.lazy").then((d) => d.Route)
+);
+
+const TypeCarsLazyRoute = TypeCarsLazyImport.update({
+  id: "/types",
+  path: "/types",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import("./routes/types/index.lazy").then((d) => d.Route));
+
+const TypeCarsIdLazyRoute = TypeCarsIdLazyImport.update({
+  id: "types/$id",
+  path: "/types/$id",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import("./routes/types/$id.lazy").then((d) => d.Route));
+
+const TypeCarsCreateLazyRoute = TypeCarsCreateLazyImport.update({
+  id: "/types/create",
+  path: "/types/create",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import("./routes/types/create.lazy").then((d) => d.Route));
+
+const TypeCarsEditIdLazyRoute = TypeCarsEditIdLazyImport.update({
+  id: "/types/edit/$id",
+  path: "/types/edit/$id",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import("./routes/types/edit/$id.lazy").then((d) => d.Route)
 );
 
 // Populate the FileRoutesByPath interface
@@ -109,6 +139,34 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof CarsEditIdLazyImport;
       parentRoute: typeof rootRoute;
     };
+    "/types": {
+      id: "/types";
+      path: "/types";
+      fullPath: "/types";
+      preLoaderRoute: typeof TypeCarsLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/types/$id": {
+      id: "/types/$id";
+      path: "/types/$id";
+      fullPath: "/types/$id";
+      preLoaderRoute: typeof TypeCarsIdLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/types/create": {
+      id: "/types/create";
+      path: "/types/create";
+      fullPath: "/types/create";
+      preLoaderRoute: typeof TypeCarsCreateLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/types/edit/$id": {
+      id: "/types/edit/$id";
+      path: "/types/edit/$id";
+      fullPath: "/types/edit/$id";
+      preLoaderRoute: typeof TypeCarsEditIdLazyImport;
+      parentRoute: typeof rootRoute;
+    };
   }
 }
 
@@ -121,6 +179,10 @@ export interface FileRoutesByFullPath {
   "/cars/$id": typeof CarsIdLazyRoute;
   "/cars/create": typeof CarsCreateLazyRoute;
   "/cars/edit/$id": typeof CarsEditIdLazyRoute;
+  "/types": typeof TypeCarsLazyRoute
+  "/types/$id": typeof TypeCarsIdLazyRoute;
+  "/types/create": typeof TypeCarsCreateLazyRoute;
+  "/types/edit/$id": typeof TypeCarsEditIdLazyRoute;
 }
 
 export interface FileRoutesByTo {
@@ -130,6 +192,10 @@ export interface FileRoutesByTo {
   "/cars/$id": typeof CarsIdLazyRoute;
   "/cars/create": typeof CarsCreateLazyRoute;
   "/cars/edit/$id": typeof CarsEditIdLazyRoute;
+  "/types": typeof TypeCarsLazyRoute;
+  "/types/$id": typeof TypeCarsIdLazyRoute;
+  "/types/create": typeof TypeCarsCreateLazyRoute;
+  "/types/edit/$id": typeof TypeCarsEditIdLazyRoute;
 }
 
 export interface FileRoutesById {
@@ -140,6 +206,10 @@ export interface FileRoutesById {
   "/cars/$id": typeof CarsIdLazyRoute;
   "/cars/create": typeof CarsCreateLazyRoute;
   "/cars/edit/$id": typeof CarsEditIdLazyRoute;
+  "/types": typeof TypeCarsLazyRoute;
+  "/types/$id": typeof TypeCarsIdLazyRoute;
+  "/types/create": typeof TypeCarsCreateLazyRoute;
+  "/types/edit/$id": typeof TypeCarsEditIdLazyRoute;
 }
 
 export interface FileRouteTypes {
@@ -150,7 +220,11 @@ export interface FileRouteTypes {
     | "/profile"
     | "/cars/$id"
     | "/cars/create"
-    | "/cars/edit/$id";
+    | "/cars/edit/$id"
+    | "/types"
+    | "/types/$id"
+    | "/types/create"
+    | "/types/edit/$id";
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/"
@@ -158,7 +232,11 @@ export interface FileRouteTypes {
     | "/profile"
     | "/cars/$id"
     | "/cars/create"
-    | "/cars/edit/$id";
+    | "/cars/edit/$id"
+    | "/types"
+    | "/types/$id"
+    | "/types/create"
+    | "/types/edit/$id";
   id:
     | "__root__"
     | "/"
@@ -166,7 +244,11 @@ export interface FileRouteTypes {
     | "/profile"
     | "/cars/$id"
     | "/cars/create"
-    | "/cars/edit/$id";
+    | "/cars/edit/$id"
+    | "/types"
+    | "/types/$id"
+    | "/types/create"
+    | "/types/edit/$id";
   fileRoutesById: FileRoutesById;
 }
 
@@ -177,6 +259,10 @@ export interface RootRouteChildren {
   CarsIdLazyRoute: typeof CarsIdLazyRoute;
   CarsCreateLazyRoute: typeof CarsCreateLazyRoute;
   CarsEditIdLazyRoute: typeof CarsEditIdLazyRoute;
+  TypeCarsLazyRoute: typeof TypeCarsLazyRoute;
+  TypeCarsIdLazyRoute: typeof TypeCarsIdLazyRoute;
+  TypeCarsCreateLazyRoute: typeof TypeCarsCreateLazyRoute;
+  TypeCarsEditIdLazyRoute: typeof TypeCarsEditIdLazyRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -186,6 +272,10 @@ const rootRouteChildren: RootRouteChildren = {
   CarsIdLazyRoute: CarsIdLazyRoute,
   CarsCreateLazyRoute: CarsCreateLazyRoute,
   CarsEditIdLazyRoute: CarsEditIdLazyRoute,
+  TypeCarsLazyRoute: TypeCarsLazyRoute,
+  TypeCarsIdLazyRoute: TypeCarsIdLazyRoute,
+  TypeCarsCreateLazyRoute: TypeCarsCreateLazyRoute,
+  TypeCarsEditIdLazyRoute: TypeCarsEditIdLazyRoute,
 };
 
 export const routeTree = rootRoute
