@@ -12,9 +12,20 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import BreadCrumb from 'react-bootstrap/BreadCrumb';
 import Card from 'react-bootstrap/Card';
+<<<<<<< HEAD
 
 export const Route = createLazyFileRoute('/transmissions/edit/$id')({
   component: EditTransmission,
+=======
+import Protected from '../../../components/Auth/Protected';
+
+export const Route = createLazyFileRoute('/transmissions/edit/$id')({
+  component: () => (
+    <Protected roles={[1]}>
+        <EditTransmission />
+    </Protected>
+  ),
+>>>>>>> 1e8b96e1671986e474abde63245625205dfc66a9
 })
 
 function EditTransmission() {
@@ -72,7 +83,11 @@ function EditTransmission() {
     <Container className="my-4">
       <BreadCrumb>
         <BreadCrumb.Item linkAs={Link} linkProps={{ to: '/transmissions' }}>
+<<<<<<< HEAD
           Home
+=======
+          Transmissions
+>>>>>>> 1e8b96e1671986e474abde63245625205dfc66a9
         </BreadCrumb.Item>
         <BreadCrumb.Item active>Update Transmission</BreadCrumb.Item>
       </BreadCrumb>
@@ -87,7 +102,11 @@ function EditTransmission() {
               <Form onSubmit={onSubmit}>
                 <Form.Group as={Row} className="mb-4" controlId="name">
                   <Form.Label column sm={3} className="fw-semibold">
+<<<<<<< HEAD
                     Name
+=======
+                    Name :
+>>>>>>> 1e8b96e1671986e474abde63245625205dfc66a9
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control
@@ -103,7 +122,11 @@ function EditTransmission() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-4" controlId="driveType">
                   <Form.Label column sm={3} className="fw-semibold">
+<<<<<<< HEAD
                     Drive Type
+=======
+                    Drive Type :
+>>>>>>> 1e8b96e1671986e474abde63245625205dfc66a9
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control
@@ -119,7 +142,11 @@ function EditTransmission() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-4" controlId="description">
                   <Form.Label column sm={3} className="fw-semibold">
+<<<<<<< HEAD
                     Description
+=======
+                    Description :
+>>>>>>> 1e8b96e1671986e474abde63245625205dfc66a9
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control

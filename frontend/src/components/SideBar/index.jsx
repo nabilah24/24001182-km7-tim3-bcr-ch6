@@ -40,7 +40,7 @@ const SideBar = ({ children }) => {
               </li>
               <li className="my-2">
                 <Link to="/types" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
-                  <FontAwesomeIcon icon={faGears} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Transmission</span>
+                  <FontAwesomeIcon icon={faGears} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Types</span>
                 </Link>
               </li>
               <li className="my-2">

@@ -95,7 +95,7 @@ function ManufactureDetail() {
     return (
         <Container className="my-4">
             <BreadCrumb>
-                <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/manufactures" }}>Home</BreadCrumb.Item>
+                <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/manufactures" }}>Manufactures</BreadCrumb.Item>
                 <BreadCrumb.Item active>Manufacture Detail</BreadCrumb.Item>
             </BreadCrumb>
             <h4 className="fw-bold mb-3">Manufacture Detail</h4>
@@ -108,6 +108,7 @@ function ManufactureDetail() {
                             <Card.Text><strong>Country :</strong> {manufacture?.country}</Card.Text>
                         </Card.Body>
                         <div className="text-center mb-3">
+                        {user?.roleId === 1 && (
                             <Button 
                                 onClick={onDelete}
                                 variant="danger"
@@ -115,6 +116,7 @@ function ManufactureDetail() {
                             >
                                 Delete
                             </Button>
+                        )}
                         </div>
                     </Card>
                 </Col>

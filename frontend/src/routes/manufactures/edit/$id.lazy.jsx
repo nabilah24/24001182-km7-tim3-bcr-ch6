@@ -8,9 +8,20 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import BreadCrumb from 'react-bootstrap/BreadCrumb';
 import Card from 'react-bootstrap/Card';
+<<<<<<< HEAD
 
 export const Route = createLazyFileRoute('/manufactures/edit/$id')({
   component: EditManufacture,
+=======
+import Protected from '../../../components/Auth/Protected';
+
+export const Route = createLazyFileRoute('/manufactures/edit/$id')({
+  component: () => (
+    <Protected roles={[1]}>
+        <EditManufacture />
+    </Protected>
+  ),
+>>>>>>> 1e8b96e1671986e474abde63245625205dfc66a9
 })
 
 function EditManufacture() {
@@ -65,7 +76,11 @@ function EditManufacture() {
     <Container className="my-4">
       <BreadCrumb>
         <BreadCrumb.Item linkAs={Link} linkProps={{ to: '/manufactures' }}>
+<<<<<<< HEAD
           Home
+=======
+          Manufactures
+>>>>>>> 1e8b96e1671986e474abde63245625205dfc66a9
         </BreadCrumb.Item>
         <BreadCrumb.Item active>Update Manufacture</BreadCrumb.Item>
       </BreadCrumb>
@@ -80,7 +95,11 @@ function EditManufacture() {
               <Form onSubmit={onSubmit}>
                 <Form.Group as={Row} className="mb-4" controlId="name">
                   <Form.Label column sm={3} className="fw-semibold">
+<<<<<<< HEAD
                     Name
+=======
+                    Name :
+>>>>>>> 1e8b96e1671986e474abde63245625205dfc66a9
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control
@@ -96,7 +115,11 @@ function EditManufacture() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-4" controlId="country">
                   <Form.Label column sm={3} className="fw-semibold">
+<<<<<<< HEAD
                     Country
+=======
+                    Country :
+>>>>>>> 1e8b96e1671986e474abde63245625205dfc66a9
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control

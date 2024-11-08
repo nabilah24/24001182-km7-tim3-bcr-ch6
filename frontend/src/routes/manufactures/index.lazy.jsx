@@ -1,6 +1,6 @@
-import Container from 'react-bootstrap/Container'
-import BreadCrumb from 'react-bootstrap/BreadCrumb'
-import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container';
+import BreadCrumb from 'react-bootstrap/BreadCrumb';
+import Button from 'react-bootstrap/Button';
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
 import Table from 'react-bootstrap/Table';
@@ -19,7 +19,7 @@ export const Route = createLazyFileRoute('/manufactures/')({
 })
 
 function IndexManufacture() {
-  const { token } = useSelector((state) => state.auth)
+  const { user, token } = useSelector((state) => state.auth)
 
   const [manufactures, setManufactures] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -66,10 +66,11 @@ function IndexManufacture() {
   return (
       <Container className="my-4">
         <BreadCrumb>
-          <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/manufactures" }}>Home</BreadCrumb.Item>
+          <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/manufactures" }}>Manufactures</BreadCrumb.Item>
         </BreadCrumb>
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
           <h4 className="fw-bold mb-3 mb-md-0">Manufacture List</h4>
+          {user?.roleId === 1 && (
           <Button 
             as={Link}
             href={`/manufactures/create`}  
@@ -79,6 +80,7 @@ function IndexManufacture() {
             <FontAwesomeIcon icon={faPlus} className="me-2" />
             <span>Create Manufacture</span>
           </Button>
+          )}
         </div>
 
         {/* Responsive Table */}

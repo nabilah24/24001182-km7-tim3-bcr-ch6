@@ -3,8 +3,12 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { confirmAlert } from "react-confirm-alert";
 import { Link } from "@tanstack/react-router";
+import { useSelector } from "react-redux";
 
 const ManufactureItem = ({ manufacture }) => {
+
+  const { user } = useSelector((state) => state.auth)
+
   return (
     <tr>
       <td>{manufacture?.id}</td>
@@ -20,6 +24,7 @@ const ManufactureItem = ({ manufacture }) => {
           >
             Detail
           </Button>
+          {user?.roleId === 1 && (
           <Button
             as={Link}
             href={`/manufactures/edit/${manufacture?.id}`}
@@ -28,6 +33,7 @@ const ManufactureItem = ({ manufacture }) => {
           >
             Update
           </Button>
+          )}
         </ButtonGroup>
       </td>
     </tr>
