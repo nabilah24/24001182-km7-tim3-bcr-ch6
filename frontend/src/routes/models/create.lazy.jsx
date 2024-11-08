@@ -11,7 +11,7 @@ import { getClasses } from '../../service/class'
 import { createStudent } from '../../service/student'
 import { toast } from 'react-toastify'
 
-export const Route = createLazyFileRoute('/student/create')({
+export const Route = createLazyFileRoute('/models/create')({
   component: CreateStudent,
 })
 

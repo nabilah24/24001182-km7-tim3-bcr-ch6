@@ -1,82 +1,82 @@
-import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
-import { getUniversities } from "../../../service/university";
-import { getClasses } from "../../../service/class";
-import { getDetailStudent, updateStudent } from "../../../service/student";
-import { toast } from "react-toastify";
+import { createLazyFileRoute, useNavigate } from '@tanstack/react-router'
+import { useState, useEffect } from 'react'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Image from 'react-bootstrap/Image'
+import { getUniversities } from '../../../service/university'
+import { getClasses } from '../../../service/class'
+import { getDetailStudent, updateStudent } from '../../../service/student'
+import { toast } from 'react-toastify'
 
-export const Route = createLazyFileRoute("/students/edit/$id")({
+export const Route = createLazyFileRoute('/cars/edit/$id')({
   component: EditStudent,
-});
+})
 
 function EditStudent() {
-  const { id } = Route.useParams();
-  const navigate = useNavigate();
+  const { id } = Route.useParams()
+  const navigate = useNavigate()
 
-  const [name, setName] = useState("");
-  const [nickName, setNickName] = useState("");
-  const [currentProfilePicture, setCurrentProfilePicture] = useState("");
-  const [profilePicture, setProfilePicture] = useState(undefined);
-  const [universities, setUniversities] = useState([]);
-  const [universityId, setUniversityId] = useState(0);
-  const [classes, setClasses] = useState([]);
-  const [classId, setClassId] = useState(0);
-  const [isNotFound, setIsNotFound] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [name, setName] = useState('')
+  const [nickName, setNickName] = useState('')
+  const [currentProfilePicture, setCurrentProfilePicture] = useState('')
+  const [profilePicture, setProfilePicture] = useState(undefined)
+  const [universities, setUniversities] = useState([])
+  const [universityId, setUniversityId] = useState(0)
+  const [classes, setClasses] = useState([])
+  const [classId, setClassId] = useState(0)
+  const [isNotFound, setIsNotFound] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const getUniversitiesData = async () => {
-      const result = await getUniversities();
+      const result = await getUniversities()
       if (result?.success) {
-        setUniversities(result?.data);
+        setUniversities(result?.data)
       }
-    };
+    }
     const getClassesData = async () => {
-      const result = await getClasses();
+      const result = await getClasses()
       if (result?.success) {
-        setClasses(result?.data);
+        setClasses(result?.data)
       }
-    };
+    }
 
-    getUniversitiesData();
-    getClassesData();
-  }, []);
+    getUniversitiesData()
+    getClassesData()
+  }, [])
 
   useEffect(() => {
     const getDetailStudentData = async (id) => {
-      setIsLoading(true);
-      const result = await getDetailStudent(id);
+      setIsLoading(true)
+      const result = await getDetailStudent(id)
       if (result?.success) {
-        setName(result.data?.name);
-        setNickName(result.data?.nick_name);
-        setUniversityId(result.data?.university_id);
-        setClassId(result.data?.class_id);
-        setCurrentProfilePicture(result.data?.profile_picture);
-        setIsNotFound(false);
+        setName(result.data?.name)
+        setNickName(result.data?.nick_name)
+        setUniversityId(result.data?.university_id)
+        setClassId(result.data?.class_id)
+        setCurrentProfilePicture(result.data?.profile_picture)
+        setIsNotFound(false)
       } else {
-        setIsNotFound(true);
+        setIsNotFound(true)
       }
-      setIsLoading(false);
-    };
+      setIsLoading(false)
+    }
 
     if (id) {
-      getDetailStudentData(id);
+      getDetailStudentData(id)
     }
-  }, [id]);
+  }, [id])
 
   if (isNotFound) {
-    navigate({ to: "/" });
-    return;
+    navigate({ to: '/' })
+    return
   }
 
   const onSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     const request = {
       name,
@@ -84,15 +84,15 @@ function EditStudent() {
       classId,
       universityId,
       profilePicture,
-    };
-    const result = await updateStudent(id, request);
+    }
+    const result = await updateStudent(id, request)
     if (result?.success) {
-      navigate({ to: `/students/${id}` });
-      return;
+      navigate({ to: `/students/${id}` })
+      return
     }
 
-    toast.error(result?.message);
-  };
+    toast.error(result?.message)
+  }
 
   return (
     <Row className="mt-5">
@@ -112,7 +112,7 @@ function EditStudent() {
                     required
                     value={name}
                     onChange={(event) => {
-                      setName(event.target.value);
+                      setName(event.target.value)
                     }}
                   />
                 </Col>
@@ -128,7 +128,7 @@ function EditStudent() {
                     required
                     value={nickName}
                     onChange={(event) => {
-                      setNickName(event.target.value);
+                      setNickName(event.target.value)
                     }}
                   />
                 </Col>
@@ -190,10 +190,10 @@ function EditStudent() {
                     type="file"
                     placeholder="Choose File"
                     onChange={(event) => {
-                      setProfilePicture(event.target.files[0]);
+                      setProfilePicture(event.target.files[0])
                       setCurrentProfilePicture(
-                        URL.createObjectURL(event.target.files[0])
-                      );
+                        URL.createObjectURL(event.target.files[0]),
+                      )
                     }}
                     accept=".jpg,.png"
                   />
@@ -216,5 +216,5 @@ function EditStudent() {
       </Col>
       <Col md={3}></Col>
     </Row>
-  );
+  )
 }
