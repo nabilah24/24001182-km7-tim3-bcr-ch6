@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { createTypeCar } from "../../services/types/index";
 import { toast } from "react-toastify";
-import Protected from "../../components/Auth/protected";
+import Protected from "../../components/";
 
 export const Route = createLazyFileRoute("/types/create")({
   component: () => (

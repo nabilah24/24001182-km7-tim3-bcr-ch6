@@ -1,46 +1,46 @@
-import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/Table";
-import { deleteTypeCar, getDetailTypeCar } from "../../services/types/index";
-import { toast } from "react-toastify";
-import { confirmAlert } from "react-confirm-alert";
-import { useSelector } from "react-redux";
+import { createLazyFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
+import Table from 'react-bootstrap/Table'
+import { deleteTypeCar, getDetailTypeCar } from '../../services/types/index'
+import { toast } from 'react-toastify'
+import { confirmAlert } from 'react-confirm-alert'
+import { useSelector } from 'react-redux'
 
-export const Route = createLazyFileRoute("types/$id")({
+export const Route = createLazyFileRoute('/types/$id')({
   component: TypeCarDetail,
-});
+})
 
 function TypeCarDetail() {
-  const { id } = Route.useParams();
-  const navigate = useNavigate();
+  const { id } = Route.useParams()
+  const navigate = useNavigate()
 
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth)
 
-  const [typeCar, setTypeCar] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isNotFound, setIsNotFound] = useState(false);
+  const [typeCar, setTypeCar] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isNotFound, setIsNotFound] = useState(false)
 
   useEffect(() => {
     const getDetailTypeCarData = async (id) => {
-      setIsLoading(true);
-      const result = await getDetailTypeCar(id);
+      setIsLoading(true)
+      const result = await getDetailTypeCar(id)
       if (result?.success) {
-        setTypeCar(result.data);
-        setIsNotFound(false);
+        setTypeCar(result.data)
+        setIsNotFound(false)
       } else {
-        setIsNotFound(true);
+        setIsNotFound(true)
       }
-      setIsLoading(false);
-    };
+      setIsLoading(false)
+    }
 
     if (id) {
-      getDetailTypeCarData(id);
+      getDetailTypeCarData(id)
     }
-  }, [id]);
+  }, [id])
 
   if (isLoading) {
     return (
@@ -49,7 +49,7 @@ function TypeCarDetail() {
           <h1 className="text-center">Loading...</h1>
         </Col>
       </Row>
-    );
+    )
   }
 
   if (isNotFound) {
@@ -59,36 +59,36 @@ function TypeCarDetail() {
           <h1 className="text-center">Car type is not found!</h1>
         </Col>
       </Row>
-    );
+    )
   }
 
   const onDelete = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     confirmAlert({
-      title: "Confirm to delete",
-      message: "Are you sure to delete this data?",
+      title: 'Confirm to delete',
+      message: 'Are you sure to delete this data?',
       buttons: [
         {
-          label: "Yes",
+          label: 'Yes',
           onClick: async () => {
-            const result = await deleteTypeCar(id);
+            const result = await deleteTypeCar(id)
             if (result?.success) {
-              navigate({ to: "/" });
-              toast.success("Car type deleted successfully!")
-              return;
+              navigate({ to: '/' })
+              toast.success('Car type deleted successfully!')
+              return
             }
 
-            toast.error(result?.message);
+            toast.error(result?.message)
           },
         },
         {
-          label: "No",
+          label: 'No',
           onClick: () => {},
         },
       ],
-    });
-  };
+    })
+  }
 
   return (
     <Row className="mt-5">
@@ -132,5 +132,5 @@ function TypeCarDetail() {
         </Table>
       </Col>
     </Row>
-  );
+  )
 }

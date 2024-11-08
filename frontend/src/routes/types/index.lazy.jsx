@@ -1,45 +1,45 @@
-import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Container, Row, Col, Table, Pagination } from "react-bootstrap";
-import { getTypeCars } from "../../services/types/index";
-import BreadCrumb from "../../components/BreadCrumb/index";
+import { createLazyFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Container, Row, Col, Table, Pagination } from 'react-bootstrap'
+import { getTypeCars } from '../../services/types/index'
+import BreadCrumb from '../../components/BreadCrumb/index'
 
-export const Route = createLazyFileRoute("/types")({
+export const Route = createLazyFileRoute('/types/')({
   component: Types,
-});
+})
 
 function Types() {
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth)
 
-  const [types, setTypeCars] = useState([]);
-  const [isLoading, setIsLoading] = useState([]);
+  const [types, setTypeCars] = useState([])
+  const [isLoading, setIsLoading] = useState([])
 
   useEffect(() => {
     const getTypeCarData = async () => {
-      setIsLoading(true);
-      const result = await getTypeCarData();
+      setIsLoading(true)
+      const result = await getTypeCarData()
       if (result.success) {
-        setTypeCars(result.data);
+        setTypeCars(result.data)
       }
-      setIsLoading(false);
-    };
+      setIsLoading(false)
+    }
 
     if (token) {
-      getTypeCarData();
+      getTypeCarData()
     }
-  }, [token]);
+  }, [token])
 
   if (!token) {
     return (
       <Row className="mt-4">
         <Col>
-        <h1 className="text-center">
-          Please login first to get car type data!
-        </h1>
+          <h1 className="text-center">
+            Please login first to get car type data!
+          </h1>
         </Col>
       </Row>
-    );
+    )
   }
 
   if (isLoading) {
@@ -47,7 +47,7 @@ function Types() {
       <Row className="mt-4">
         <h1>Loading...</h1>
       </Row>
-    );
+    )
   }
 
   return (
@@ -55,7 +55,7 @@ function Types() {
       {types.length === 0 ? (
         <h1>Car type data is not found!</h1>
       ) : (
-        <Container className="p-2 mt-2" style={{ marginLeft: "12vw" }}>
+        <Container className="p-2 mt-2" style={{ marginLeft: '12vw' }}>
           <BreadCrumb />
           <Row className="d-flex ">
             <Col>
@@ -147,5 +147,5 @@ function Types() {
         </Container>
       )}
     </Row>
-  );
+  )
 }

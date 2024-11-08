@@ -1,52 +1,52 @@
-import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
-import { getUniversities } from "../../service/university";
-import { getClasses } from "../../service/class";
-import { createStudent } from "../../service/student";
-import { toast } from "react-toastify";
+import { createLazyFileRoute, useNavigate } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Image from 'react-bootstrap/Image'
+import { getUniversities } from '../../service/university'
+import { getClasses } from '../../service/class'
+import { createStudent } from '../../service/student'
+import { toast } from 'react-toastify'
 
-export const Route = createLazyFileRoute("/students/create")({
+export const Route = createLazyFileRoute('/models/create')({
   component: CreateStudent,
-});
+})
 
 function CreateStudent() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [name, setName] = useState("");
-  const [nickName, setNickName] = useState("");
-  const [profilePicture, setProfilePicture] = useState(undefined);
-  const [currentProfilePicture, setCurrentProfilePicture] = useState(undefined);
-  const [universities, setUniversities] = useState([]);
-  const [universityId, setUniversityId] = useState(0);
-  const [classes, setClasses] = useState([]);
-  const [classId, setClassId] = useState(0);
+  const [name, setName] = useState('')
+  const [nickName, setNickName] = useState('')
+  const [profilePicture, setProfilePicture] = useState(undefined)
+  const [currentProfilePicture, setCurrentProfilePicture] = useState(undefined)
+  const [universities, setUniversities] = useState([])
+  const [universityId, setUniversityId] = useState(0)
+  const [classes, setClasses] = useState([])
+  const [classId, setClassId] = useState(0)
 
   useEffect(() => {
     const getUniversitiesData = async () => {
-      const result = await getUniversities();
+      const result = await getUniversities()
       if (result?.success) {
-        setUniversities(result?.data);
+        setUniversities(result?.data)
       }
-    };
+    }
     const getClassesData = async () => {
-      const result = await getClasses();
+      const result = await getClasses()
       if (result?.success) {
-        setClasses(result?.data);
+        setClasses(result?.data)
       }
-    };
+    }
 
-    getUniversitiesData();
-    getClassesData();
-  }, []);
+    getUniversitiesData()
+    getClassesData()
+  }, [])
 
   const onSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     const request = {
       name,
@@ -54,15 +54,15 @@ function CreateStudent() {
       classId,
       universityId,
       profilePicture,
-    };
-    const result = await createStudent(request);
+    }
+    const result = await createStudent(request)
     if (result?.success) {
-      navigate({ to: "/" });
-      return;
+      navigate({ to: '/' })
+      return
     }
 
-    toast.error(result?.message);
-  };
+    toast.error(result?.message)
+  }
 
   return (
     <Row className="mt-5">
@@ -82,7 +82,7 @@ function CreateStudent() {
                     required
                     value={name}
                     onChange={(event) => {
-                      setName(event.target.value);
+                      setName(event.target.value)
                     }}
                   />
                 </Col>
@@ -98,7 +98,7 @@ function CreateStudent() {
                     required
                     value={nickName}
                     onChange={(event) => {
-                      setNickName(event.target.value);
+                      setNickName(event.target.value)
                     }}
                   />
                 </Col>
@@ -155,10 +155,10 @@ function CreateStudent() {
                     placeholder="Choose File"
                     required
                     onChange={(event) => {
-                      setProfilePicture(event.target.files[0]);
+                      setProfilePicture(event.target.files[0])
                       setCurrentProfilePicture(
-                        URL.createObjectURL(event.target.files[0])
-                      );
+                        URL.createObjectURL(event.target.files[0]),
+                      )
                     }}
                     accept=".jpg,.png"
                   />
@@ -181,5 +181,5 @@ function CreateStudent() {
       </Col>
       <Col md={3}></Col>
     </Row>
-  );
+  )
 }
