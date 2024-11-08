@@ -8,9 +8,14 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import BreadCrumb from "react-bootstrap/BreadCrumb";
 import Card from "react-bootstrap/Card";
+import Protected from '../../components/Auth/Protected';
 
 export const Route = createLazyFileRoute('/manufactures/create')({
-  component: CreateManufacture,
+  component: () => (
+    <Protected roles={[1]}>
+        <CreateManufacture />
+    </Protected>
+  ),
 })
 
 function CreateManufacture() {
@@ -37,7 +42,7 @@ function CreateManufacture() {
   return (
     <Container className="my-4">
             <BreadCrumb>
-                <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/manufactures" }}>Home</BreadCrumb.Item>
+                <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/manufactures" }}>Manufactures</BreadCrumb.Item>
                 <BreadCrumb.Item active>Create Manufacture</BreadCrumb.Item>
             </BreadCrumb>
             <h4 className="fw-bold mb-3">Create Manufacture</h4>
@@ -49,7 +54,7 @@ function CreateManufacture() {
                             <Form onSubmit={onSubmit}>
                                 <Form.Group as={Row} className="mb-4" controlId="name">
                                     <Form.Label column sm={3} className="fw-semibold">
-                                        Name
+                                        Name :
                                     </Form.Label>
                                     <Col sm={9}>
                                         <Form.Control
@@ -63,7 +68,7 @@ function CreateManufacture() {
                                 </Form.Group>
                                 <Form.Group as={Row} className="mb-4" controlId="country">
                                     <Form.Label column sm={3} className="fw-semibold">
-                                        Country
+                                        Country :
                                     </Form.Label>
                                     <Col sm={9}>
                                         <Form.Control

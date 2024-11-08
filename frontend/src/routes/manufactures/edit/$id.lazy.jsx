@@ -8,9 +8,14 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import BreadCrumb from 'react-bootstrap/BreadCrumb';
 import Card from 'react-bootstrap/Card';
+import Protected from '../../../components/Auth/Protected';
 
 export const Route = createLazyFileRoute('/manufactures/edit/$id')({
-  component: EditManufacture,
+  component: () => (
+    <Protected roles={[1]}>
+        <EditManufacture />
+    </Protected>
+  ),
 })
 
 function EditManufacture() {
@@ -65,7 +70,7 @@ function EditManufacture() {
     <Container className="my-4">
       <BreadCrumb>
         <BreadCrumb.Item linkAs={Link} linkProps={{ to: '/manufactures' }}>
-          Home
+          Manufactures
         </BreadCrumb.Item>
         <BreadCrumb.Item active>Update Manufacture</BreadCrumb.Item>
       </BreadCrumb>
@@ -80,7 +85,7 @@ function EditManufacture() {
               <Form onSubmit={onSubmit}>
                 <Form.Group as={Row} className="mb-4" controlId="name">
                   <Form.Label column sm={3} className="fw-semibold">
-                    Name
+                    Name :
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control
@@ -96,7 +101,7 @@ function EditManufacture() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-4" controlId="country">
                   <Form.Label column sm={3} className="fw-semibold">
-                    Country
+                    Country :
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control

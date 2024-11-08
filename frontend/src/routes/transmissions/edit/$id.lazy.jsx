@@ -12,9 +12,14 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import BreadCrumb from 'react-bootstrap/BreadCrumb';
 import Card from 'react-bootstrap/Card';
+import Protected from '../../../components/Auth/Protected';
 
 export const Route = createLazyFileRoute('/transmissions/edit/$id')({
-  component: EditTransmission,
+  component: () => (
+    <Protected roles={[1]}>
+        <EditTransmission />
+    </Protected>
+  ),
 })
 
 function EditTransmission() {
@@ -72,7 +77,7 @@ function EditTransmission() {
     <Container className="my-4">
       <BreadCrumb>
         <BreadCrumb.Item linkAs={Link} linkProps={{ to: '/transmissions' }}>
-          Home
+          Transmissions
         </BreadCrumb.Item>
         <BreadCrumb.Item active>Update Transmission</BreadCrumb.Item>
       </BreadCrumb>
@@ -87,7 +92,7 @@ function EditTransmission() {
               <Form onSubmit={onSubmit}>
                 <Form.Group as={Row} className="mb-4" controlId="name">
                   <Form.Label column sm={3} className="fw-semibold">
-                    Name
+                    Name :
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control
@@ -103,7 +108,7 @@ function EditTransmission() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-4" controlId="driveType">
                   <Form.Label column sm={3} className="fw-semibold">
-                    Drive Type
+                    Drive Type :
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control
@@ -119,7 +124,7 @@ function EditTransmission() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-4" controlId="description">
                   <Form.Label column sm={3} className="fw-semibold">
-                    Description
+                    Description :
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control

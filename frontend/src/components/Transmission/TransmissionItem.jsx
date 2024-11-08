@@ -3,8 +3,12 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { confirmAlert } from "react-confirm-alert";
 import { Link } from "@tanstack/react-router";
+import { useSelector } from "react-redux";
 
 const TransmissionItem = ({transmission}) => {
+
+  const { user } = useSelector((state) => state.auth)
+  
   return (
     <tr>
       <td>{transmission?.id}</td>
@@ -21,6 +25,7 @@ const TransmissionItem = ({transmission}) => {
           >
             Detail
           </Button>
+          {user?.roleId === 1 && (
           <Button
             as={Link}
             href={`/transmissions/edit/${transmission?.id}`}
@@ -29,6 +34,7 @@ const TransmissionItem = ({transmission}) => {
           >
             Update
           </Button>
+          )}
         </ButtonGroup>
       </td>
     </tr>
