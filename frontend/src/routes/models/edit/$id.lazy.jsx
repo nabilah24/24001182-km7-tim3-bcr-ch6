@@ -94,7 +94,7 @@ function EditModel() {
     };
     const result = await updateModel(id, request);
     if (result?.success) {
-      navigate({ to: `/models/${id}` });
+      navigate({ to: `/models/` });
       return;
     }
 
