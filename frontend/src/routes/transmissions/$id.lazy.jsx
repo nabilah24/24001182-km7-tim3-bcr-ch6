@@ -1,61 +1,61 @@
-import { createLazyFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
-import Container from 'react-bootstrap/Container'
-import BreadCrumb from 'react-bootstrap/BreadCrumb'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Card from 'react-bootstrap/Card'
-import Spinner from 'react-bootstrap/Spinner'
-import Button from 'react-bootstrap/Button'
-import { deleteTransmission } from '../../services/transmissions'
-import { getDetailTransmission } from '../../services/transmissions'
-import { toast } from 'react-toastify'
-import { confirmAlert } from 'react-confirm-alert'
-import { useSelector } from 'react-redux'
-import Swal from 'sweetalert2'
+import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import Container from "react-bootstrap/Container";
+import BreadCrumb from "react-bootstrap/BreadCrumb";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
+import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
+import { deleteTransmission } from "../../services/transmissions";
+import { getDetailTransmission } from "../../services/transmissions";
+import { toast } from "react-toastify";
+import { confirmAlert } from "react-confirm-alert";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
-export const Route = createLazyFileRoute('/transmissions/$id')({
+export const Route = createLazyFileRoute("/transmissions/$id")({
   component: TransmissionDetail,
-})
+});
 
 function TransmissionDetail() {
-  const { id } = Route.useParams()
-  const navigate = useNavigate()
+  const { id } = Route.useParams();
+  const navigate = useNavigate();
 
-  const { user } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth);
 
-  const [transmission, setTransmission] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isNotFound, setIsNotFound] = useState(false)
+  const [transmission, setTransmission] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isNotFound, setIsNotFound] = useState(false);
 
   useEffect(() => {
     const getDetailTransmissionData = async (id) => {
-      setIsLoading(true)
-      const result = await getDetailTransmission(id)
+      setIsLoading(true);
+      const result = await getDetailTransmission(id);
       if (result?.success) {
-        setTransmission(result.data)
-        setIsNotFound(false)
+        setTransmission(result.data);
+        setIsNotFound(false);
       } else {
-        setIsNotFound(true)
+        setIsNotFound(true);
       }
-      setIsLoading(false)
-    }
+      setIsLoading(false);
+    };
 
     if (id) {
-      getDetailTransmissionData(id)
+      getDetailTransmissionData(id);
     }
-  }, [id])
+  }, [id]);
 
   if (isLoading) {
     return (
       <Row className="mt-5">
         <Col className="text-center">
           <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
+            <span className="visually-hidden"></span>
           </Spinner>
         </Col>
       </Row>
-    )
+    );
   }
 
   if (isNotFound) {
@@ -65,37 +65,37 @@ function TransmissionDetail() {
           <h1 className="text-center">Transmission is not found!</h1>
         </Col>
       </Row>
-    )
+    );
   }
 
   const onDelete = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     Swal.fire({
-      title: 'Confirm to delete',
-      text: 'Are you sure to delete this data?',
-      icon: 'warning',
+      title: "Confirm to delete",
+      text: "Are you sure to delete this data?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes',
-      confirmButtonColor: '#0d6efd',
-      cancelButtonText: 'No',
+      confirmButtonText: "Yes",
+      confirmButtonColor: "#0d6efd",
+      cancelButtonText: "No",
       reverseButtons: true,
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const deleteResult = await deleteTransmission(id)
+        const deleteResult = await deleteTransmission(id);
         if (deleteResult?.success) {
-          navigate({ to: '/transmissions' })
+          navigate({ to: "/transmissions" });
         } else {
-          toast.error(deleteResult?.message)
+          toast.error(deleteResult?.message);
         }
       }
-    })
-  }
+    });
+  };
 
   return (
     <Container className="my-4">
       <BreadCrumb>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: '/transmissions' }}>
+        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/transmissions" }}>
           Transmissions
         </BreadCrumb.Item>
         <BreadCrumb.Item active>Transmission Detail</BreadCrumb.Item>
@@ -120,19 +120,19 @@ function TransmissionDetail() {
               </Card.Text>
             </Card.Body>
             <div className="text-center mb-3">
-            {user?.roleId === 1 && (
-              <Button
-                onClick={onDelete}
-                variant="danger"
-                className="px-5 py-2 mt-2"
-              >
-                Delete
-              </Button>
-            )}
+              {user?.roleId === 1 && (
+                <Button
+                  onClick={onDelete}
+                  variant="danger"
+                  className="px-5 py-2 mt-2"
+                >
+                  Delete
+                </Button>
+              )}
             </div>
           </Card>
         </Col>
       </Row>
     </Container>
-  )
+  );
 }

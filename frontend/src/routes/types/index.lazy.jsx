@@ -61,7 +61,7 @@ function TypeIndex() {
       <Row className="mt-5">
         <Col className="text-center">
           <Spinner animation="border" role="status">
-            <span className="visualy-hidden">Loading...</span>
+            <span className="visualy-hidden"></span>
           </Spinner>
         </Col>
       </Row>

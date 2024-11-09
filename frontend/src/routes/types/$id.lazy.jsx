@@ -51,7 +51,7 @@ function TypeCarDetail() {
       <Row className="mt-5">
         <Col className="text-center">
           <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
+            <span className="visually-hidden"></span>
           </Spinner>
         </Col>
       </Row>
