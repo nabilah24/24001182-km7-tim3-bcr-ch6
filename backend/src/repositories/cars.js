@@ -56,6 +56,15 @@ const getCarById = async (id) => {
       models: true,
       types: true,
     },
+    include: {
+      models: {
+        include: {
+          manufactures: true,
+          transmissions: true,
+        },
+      },
+      types: true,
+    },
   });
 
   // Konversi field BigInt ke string supaya serialization-nya aman

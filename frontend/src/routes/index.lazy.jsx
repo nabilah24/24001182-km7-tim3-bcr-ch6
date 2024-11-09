@@ -76,10 +76,9 @@ function Index() {
     }
   }, [token]);
 
-
   if (!token) {
-      navigate({ to: "/login" });
-    }
+    navigate({ to: "/login" });
+  }
 
   if (isLoading) {
     return (
@@ -100,7 +99,6 @@ function Index() {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     return data.slice(indexOfFirstItem, indexOfLastItem);
   };
-
 
   // Fungsi untuk beralih halaman
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);

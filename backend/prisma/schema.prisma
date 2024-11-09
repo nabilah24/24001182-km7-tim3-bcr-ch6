@@ -47,6 +47,18 @@ model models {
   transmissions  transmissions? @relation(fields: [transmissionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
+<<<<<<< HEAD
+model manufactures {
+  id        BigInt    @id @default(autoincrement())
+  name      String?   @db.VarChar(255)
+  country   String?   @db.VarChar(255)
+  createdAt DateTime? @default(now()) @db.Timestamp(6)
+  updatedAt DateTime? @default(now()) @db.Timestamp(6)
+  models    models[]
+}
+
+=======
+>>>>>>> 2a84cef90b2f0258a007dbd2f332b3a539407062
 model transmissions {
   id          BigInt    @id @default(autoincrement())
   name        String?   @db.VarChar(255)
@@ -68,11 +80,20 @@ model types {
 }
 
 model users {
+<<<<<<< HEAD
+  id             BigInt    @id(map: "users_pk") @default(autoincrement())
+  name           String    @db.VarChar
+  email          String    @unique(map: "users_email_idx") @db.VarChar
+  password       String    @db.VarChar
+  profilePicture String?   @db.VarChar
+  roleId         Int       @default(2)
+=======
   id             BigInt    @id @default(autoincrement())
   name           String?   @db.VarChar(255)
   email          String?   @unique @db.VarChar(255)
   password       String?   @db.VarChar(255)
   profilePicture String?   @db.VarChar(255)
   roleId         Int?      @default(2)
+>>>>>>> 2a84cef90b2f0258a007dbd2f332b3a539407062
   createdAt      DateTime? @default(now()) @db.Timestamp(6)
 }

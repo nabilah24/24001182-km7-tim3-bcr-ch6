@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
+import React from "react";
+import { Link } from "@tanstack/react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faWrench,
+  faHome,
   faWrench,
   faHome,
   faCarSide,
@@ -9,30 +13,28 @@ import {
   faGears,
   faIndustry,
 } from "@fortawesome/free-solid-svg-icons";
+import { Nav } from "react-bootstrap";
 
 const SideBar = ({ children }) => {
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
-        <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-primary">
           <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-            <Link
-              to="/"
-              className="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-            >
-              <span className="fs-5 d-none d-sm-inline">Menu</span>
-            </Link>
-            <ul
+            <Nav
               className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
               id="menu"
             >
-              <li className="nav-item my-2">
-                <Link to="/" className="nav-link align-middle px-0 text-white">
+              <Nav.Item className="nav-item my-2">
+                <Nav.Link
+                  as={Link}
+                  to="/"
+                  className="align-middle px-0 text-white"
+                >
                   <FontAwesomeIcon icon={faHome} className="fs-4" />{" "}
-                  <span className="ms-4 d-none d-sm-inline">Dashboards</span>
-                </Link>
-              </li>
-
+                  <span className="ms-4 d-none d-sm-inline">Dashboard</span>
+                </Nav.Link>
+              </Nav.Item>
               <li className="my-2">
                 <Link
                   to="/cars"
@@ -54,7 +56,17 @@ const SideBar = ({ children }) => {
               </li>
               <li className="my-2">
                 <Link
-                  to="/manufactures"
+                  to="/types"
+                  data-bs-toggle="collapse"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <FontAwesomeIcon icon={faGears} className="fs-4" />{" "}
+                  <span className="ms-4 d-none d-sm-inline">Transmission</span>
+                </Link>
+              </li>
+              <li className="my-2">
+                <Link
+                  to="/manufacture"
                   className="nav-link px-0 align-middle text-white"
                 >
                   <FontAwesomeIcon icon={faIndustry} className="fs-4" />{" "}
@@ -63,25 +75,19 @@ const SideBar = ({ children }) => {
               </li>
               <li className="my-2">
                 <Link
-                  to="/transmissions"
+                  to="/transmission"
                   className="nav-link px-0 align-middle text-white"
                 >
                   <FontAwesomeIcon icon={faWrench} className="fs-4" />{" "}
                   <span className="ms-4 d-none d-sm-inline">Transmissions</span>
                 </Link>
               </li>
-              <li className="my-2">
-                <Link
-                  to="/types"
-                  data-bs-toggle="collapse"
-                  className="nav-link px-0 align-middle text-white"
-                >
-                  <FontAwesomeIcon icon={faGears} className="fs-4" />{" "}
-                  <span className="ms-4 d-none d-sm-inline">Types</span>
-                </Link>
-              </li>
-            </ul>
+            </Nav>
           </div>
+        </div>
+        <div className="col py-3">{children}</div>
+      </div>
+    </div>
         </div>
         <div className="col py-3">{children}</div>
       </div>
