@@ -17,3 +17,11 @@ Creating CRUD Manufactures & Transmissions:
 - Ridhwan Tsalasah Putra
 
 ------------------------TIM 3-----------------------------------
+
+- Admin
+Email: mferdybbas23@gmail.com
+Pw: operAtioNAuthe311
+
+- User
+Email: henryhotang23@gmail.com
+Pw: henryAccount4556
