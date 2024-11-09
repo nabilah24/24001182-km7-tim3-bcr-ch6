@@ -120,8 +120,8 @@ function Index() {
       </div>
 
       {/* List Users */}
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
-        <h5 className="fw-bold mb-3 mb-md-0">
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-5">
+        <h5 className="fw-bold mb-2 mb-md-0">
           <FontAwesomeIcon icon={faGripLinesVertical} className="me-2" />
           List Users
         </h5>
@@ -207,7 +207,7 @@ function Index() {
           <tbody>
             {paginate(cars).length === 0 ? (
               <tr>
-                <td colSpan={6} className="text-center">
+                <td colSpan={9} className="text-center">
                   <strong>Data is not found!</strong>
                 </td>
               </tr>
