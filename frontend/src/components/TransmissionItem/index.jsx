@@ -5,10 +5,9 @@ import { confirmAlert } from "react-confirm-alert";
 import { Link } from "@tanstack/react-router";
 import { useSelector } from "react-redux";
 
-const TransmissionItem = ({transmission}) => {
+const TransmissionItem = ({ transmission }) => {
+  const { user } = useSelector((state) => state.auth);
 
-  const { user } = useSelector((state) => state.auth)
-  
   return (
     <tr>
       <td>{transmission?.id}</td>
@@ -26,14 +25,14 @@ const TransmissionItem = ({transmission}) => {
             Detail
           </Button>
           {user?.roleId === 1 && (
-          <Button
-            as={Link}
-            href={`/transmissions/edit/${transmission?.id}`}
-            variant="warning"
-            className="me-2"
-          >
-            Update
-          </Button>
+            <Button
+              as={Link}
+              href={`/transmissions/edit/${transmission?.id}`}
+              variant="warning"
+              className="me-2"
+            >
+              Update
+            </Button>
           )}
         </ButtonGroup>
       </td>
@@ -42,7 +41,7 @@ const TransmissionItem = ({transmission}) => {
 };
 
 TransmissionItem.propTypes = {
-    transmission: PropTypes.object,
+  transmission: PropTypes.object,
 };
 
 export default TransmissionItem;

@@ -6,11 +6,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
-import BreadCrumb from "react-bootstrap/BreadCrumb";
 import Pagination from "react-bootstrap/Pagination";
 import Spinner from "react-bootstrap/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getUsers } from "../services/auth";
+import { getUsers } from "../services/users";
 import { getCars } from "../services/cars";
 import { getModels } from "../services/models";
 import { getManufactures } from "../services/manufactures";
@@ -76,17 +75,16 @@ function Index() {
     }
   }, [token]);
 
-
   if (!token) {
-      navigate({ to: "/login" });
-    }
+    navigate({ to: "/login" });
+  }
 
   if (isLoading) {
     return (
       <Row className="mt-5">
         <Col className="text-center">
           <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
+            <span className="visually-hidden"></span>
           </Spinner>
         </Col>
       </Row>
@@ -101,22 +99,13 @@ function Index() {
     return data.slice(indexOfFirstItem, indexOfLastItem);
   };
 
-
   // Fungsi untuk beralih halaman
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <Container className="my-4">
-      <BreadCrumb>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
-          Dashboard
-        </BreadCrumb.Item>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/cars" }}>
-          Cars
-        </BreadCrumb.Item>
-      </BreadCrumb>
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
-        <h4 className="fw-bold mb-3 mb-md-0">Dashboard</h4>
+      <div className="d-flex mb-3 flex-column flex-md-row justify-content-between align-items-center">
+        <h4 className="fw-bold mb-md-0">Dashboard</h4>
       </div>
 
       {/* List Users */}

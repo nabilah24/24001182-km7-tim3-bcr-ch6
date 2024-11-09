@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import Alert from "react-bootstrap/Alert";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/slices/auth";
 import { login } from "../services/auth";
@@ -52,7 +52,7 @@ function Login() {
       return;
     }
 
-    alert(result?.message);
+    toast.error(result?.message);
   };
 
   return (
@@ -82,14 +82,9 @@ function Login() {
               padding: "1rem",
             }}
           >
-            <div
-              style={{
-                width: "75px",
-                height: "25px",
-                backgroundColor: "#CFD4ED",
-              }}
-              className="mb-3"
-            ></div>
+            <div className="text-body-secondary fs-5 fw-bold mb-3">
+              BINAR CAR RENTAL
+            </div>
             <h4 className="fw-bold">Welcome, Admin BCR</h4>
             <Form onSubmit={onSubmit}>
               <Form.Group

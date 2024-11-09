@@ -6,8 +6,7 @@ import { Link } from "@tanstack/react-router";
 import { useSelector } from "react-redux";
 
 const ManufactureItem = ({ manufacture }) => {
-
-  const { user } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <tr>
@@ -25,14 +24,14 @@ const ManufactureItem = ({ manufacture }) => {
             Detail
           </Button>
           {user?.roleId === 1 && (
-          <Button
-            as={Link}
-            href={`/manufactures/edit/${manufacture?.id}`}
-            variant="warning"
-            className="me-2"
-          >
-            Update
-          </Button>
+            <Button
+              as={Link}
+              href={`/manufactures/edit/${manufacture?.id}`}
+              variant="warning"
+              className="me-2"
+            >
+              Update
+            </Button>
           )}
         </ButtonGroup>
       </td>
