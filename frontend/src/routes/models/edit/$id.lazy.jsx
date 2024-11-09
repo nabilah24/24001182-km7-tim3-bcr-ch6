@@ -92,7 +92,7 @@ function EditModel() {
       year,
       rentPerDay,
     };
-    const result = await updateModel(request);
+    const result = await updateModel(id, request);
     if (result?.success) {
       navigate({ to: `/models/${id}` });
       return;
@@ -222,7 +222,7 @@ function EditModel() {
                 </Form.Group>
                 <div className="d-grid gap-2 mt-3">
                   <Button type="submit" variant="primary">
-                    Add
+                    Submit
                   </Button>
                 </div>
               </Form>
