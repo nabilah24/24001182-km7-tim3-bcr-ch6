@@ -269,6 +269,73 @@ function Index() {
         </Pagination>
       )}
 
+      {/* List Cars */}
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4">
+        <h5 className="fw-bold mb-3 mb-md-0">
+          <FontAwesomeIcon icon={faGripLinesVertical} className="me-2" />
+          List Models
+        </h5>
+      </div>
+      <div className="table-responsive mt-4">
+        <Table bordered hover className="mb-0">
+          <thead className="text-center">
+            <tr>
+              <th>No</th>
+              <th>Model</th>
+              <th>Year</th>
+              <th>Rent Cost</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginate(models).length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center">
+                  <strong>Data is not found!</strong>
+                </td>
+              </tr>
+            ) : (
+              paginate(models).map((model, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{model?.name}</td>
+                  <td>{model?.year}</td>
+                  <td>{model?.rentPerDay}</td>
+                  <td>{model?.createdAt}</td>
+                  <td>{model?.updatedAt}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
+
+      {/* Pagination for Cars */}
+      {cars.length > 0 && (
+        <Pagination className="mt-4 justify-content-center">
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[...Array(Math.ceil(cars.length / itemsPerPage)).keys()].map(
+            (number) => (
+              <Pagination.Item
+                key={number + 1}
+                active={currentPage === number + 1}
+                onClick={() => handlePageChange(number + 1)}
+              >
+                {number + 1}
+              </Pagination.Item>
+            )
+          )}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === Math.ceil(cars.length / itemsPerPage)}
+          />
+        </Pagination>
+      )}
+
       {/* List Manufactures */}
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
         <h5 className="fw-bold mb-3 mb-md-0">
