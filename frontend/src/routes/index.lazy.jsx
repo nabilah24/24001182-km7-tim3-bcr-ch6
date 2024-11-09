@@ -145,11 +145,12 @@ function Index() {
               </tr>
             ) : (
               paginate(users).map((user, index) => (
-                <UserItem
-                  type={user}
-                  key={user?.id}
-                  index={(currentPage - 1) * itemsPerPage + index + 1}
-                ></UserItem>
+                <tr key={user.id}>
+                  <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td>{user.createdAt}</td>
+                </tr>
               ))
             )}
           </tbody>
@@ -214,26 +215,28 @@ function Index() {
               paginate(cars).map((car, model, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{car?.plate}</td>
+                  <td>{car?.plate || "N/A"}</td>
                   <td>
-                    {models.find((model) => model.id === car.modelId)?.name}
+                    {models.find((m) => m.id === car.modelId)?.name || "N/A"}
                   </td>
                   <td>
-                    {
-                      manufactures.find(
-                        (manufacture) => manufacture.id === model.manufactureId
-                      )?.name
-                    }
+                    {manufactures.find(
+                      (man) =>
+                        man.id ===
+                        models.find((m) => m.id === car.modelId)?.manufactureId
+                    )?.name || "N/A"}
                   </td>
                   <td>
-                    {
-                      transmissions.find(
-                        (transmission) => transmission.id === model.transmissionId
-                      )?.name
-                    }
+                    {transmissions.find(
+                      (tran) =>
+                        tran.id ===
+                        models.find((m) => m.id === car.modelId)?.transmissionId
+                    )?.name || "N/A"}
                   </td>
-                  <td>{types.find((type) => type.id === car.typeId)?.name}</td>
-                  <td>{car?.description}</td>
+                  <td>
+                    {types.find((t) => t.id === car.typeId)?.name || "N/A"}
+                  </td>
+                  <td>{car?.description || "N/A"}</td>
                 </tr>
               ))
             )}
@@ -335,7 +338,10 @@ function Index() {
 
       {/* List Transmissions */}
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
-        <h5 className="fw-bold mb-3 mb-md-0"><FontAwesomeIcon icon={faGripLinesVertical} className="me-2" />List Transmissions</h5>
+        <h5 className="fw-bold mb-3 mb-md-0">
+          <FontAwesomeIcon icon={faGripLinesVertical} className="me-2" />
+          List Transmissions
+        </h5>
       </div>
       <div className="table-responsive mt-4">
         <Table bordered hover className="mb-0">
