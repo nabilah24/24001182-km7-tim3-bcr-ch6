@@ -57,12 +57,12 @@ function Index() {
           getTypeCars(),
         ]);
 
-        setUsers(userData.data);
-        setCars(carData.data);
-        setModels(modelData.data);
-        setManufactures(manufactureData.data);
-        setTransmissions(transmissionData.data);
-        setTypeCars(typeData.data);
+        setUsers(userData.data || []); // Ensure it's an array
+        setCars(carData.data || []); // Ensure it's an array
+        setModels(modelData.data || []); // Ensure it's an array
+        setManufactures(manufactureData.data || []); // Ensure it's an array
+        setTransmissions(transmissionData.data || []); // Ensure it's an array
+        setTypeCars(typeData.data || []); // Ensure it's an array
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -74,6 +74,7 @@ function Index() {
       getAllData();
     }
   }, [token]);
+
 
   if (!token) {
     return (
@@ -217,7 +218,7 @@ function Index() {
                 </td>
               </tr>
             ) : (
-              paginate(cars).map((car, index) => (
+              paginate(cars).map((car, model, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{car?.plate}</td>
@@ -227,14 +228,14 @@ function Index() {
                   <td>
                     {
                       manufactures.find(
-                        (manufacture) => manufacture.id === car.manufactureId
+                        (manufacture) => manufacture.id === model.manufactureId
                       )?.name
                     }
                   </td>
                   <td>
                     {
                       transmissions.find(
-                        (transmission) => transmission.id === car.transmissionId
+                        (transmission) => transmission.id === model.transmissionId
                       )?.name
                     }
                   </td>
