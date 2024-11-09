@@ -1,11 +1,7 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
-import React from "react";
-import { Link } from "@tanstack/react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faWrench,
-  faHome,
   faWrench,
   faHome,
   faCarSide,
@@ -84,10 +80,6 @@ const SideBar = ({ children }) => {
               </li>
             </Nav>
           </div>
-        </div>
-        <div className="col py-3">{children}</div>
-      </div>
-    </div>
         </div>
         <div className="col py-3">{children}</div>
       </div>
