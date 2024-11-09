@@ -62,7 +62,7 @@ const SideBar = ({ children }) => {
               </li>
               <li className="my-2">
                 <Link
-                  to="/manufacture"
+                  to="/manufactures"
                   className="nav-link px-0 align-middle text-white"
                 >
                   <FontAwesomeIcon icon={faIndustry} className="fs-4" />{" "}
@@ -71,7 +71,7 @@ const SideBar = ({ children }) => {
               </li>
               <li className="my-2">
                 <Link
-                  to="/transmission"
+                  to="/transmissions"
                   className="nav-link px-0 align-middle text-white"
                 >
                   <FontAwesomeIcon icon={faWrench} className="fs-4" />{" "}

@@ -1,10 +1,10 @@
 import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { getManufactures } from "../../services/manufactures";
-import { getTransmissions } from "../../services/transmissions";
-import { getModelDetail, updateModel } from "../../services/models";
+import { getManufactures } from "../../../services/manufactures";
+import { getTransmissions } from "../../../services/transmissions";
+import { getModelDetail, updateModel } from "../../../services/models";
 import { toast } from "react-toastify";
-import Protected from "../../components/Auth/Protected";
+import Protected from "../../../components/Auth/Protected";
 import {
   Breadcrumb,
   Container,
@@ -35,7 +35,7 @@ function EditModel() {
   const [year, setYear] = useState(null);
   const [rentPerDay, setRentPerDay] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isNotFound, setIsNotFound] = useState(true);
+  const [isNotFound, setIsNotFound] = useState(false);
 
   useEffect(() => {
     const getManufacturesData = async () => {

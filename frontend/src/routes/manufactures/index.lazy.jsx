@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { getManufactures } from "../../services/manufactures";
-import ManufactureItem from "../../components/Manufacture/ManufactureItem";
+import ManufactureItem from "../../components/ManufactureItem";
 import { confirmAlert } from "react-confirm-alert";
 
 export const Route = createLazyFileRoute("/manufactures/")({

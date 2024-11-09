@@ -1,7 +1,7 @@
 import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { getModels } from "../../services/models";
-import { getTypes } from "../../services/types";
+import { getTypeCars } from "../../services/types";
 import { createCar } from "../../services/cars";
 import { toast } from "react-toastify";
 import Protected from "../../components/Auth/Protected";
@@ -35,7 +35,6 @@ function CreateCar() {
   const [modelId, setModelId] = useState(0);
   const [types, setTypes] = useState([]);
   const [typeId, setTypeId] = useState(0);
-  const [description, setDescription] = useState("");
   const [availableAt, setAvailableAt] = useState("");
   const [available, setAvailable] = useState(false);
   const [image, setImage] = useState(undefined);
@@ -55,7 +54,7 @@ function CreateCar() {
       }
     };
     const getTypesData = async () => {
-      const result = await getTypes();
+      const result = await getTypeCars();
       if (result?.success) {
         setTypes(result?.data);
       }
@@ -66,8 +65,8 @@ function CreateCar() {
   }, []);
 
   // ------ handle description input --------
-  const [text, setText] = useState("");
-  const textMaxLength = 150;
+  const [description, setDescription] = useState("");
+  const textMaxLength = 250;
 
   // ------ Input Array Options -----------
   // Fungsi untuk menambah item ke array options
@@ -237,15 +236,16 @@ function CreateCar() {
                       </Form.Label>
                       <Form.Control
                         as="textarea"
+                        type="text"
                         rows={6}
                         maxLength={textMaxLength}
-                        value={text}
-                        onChange={(event) => setText(event.target.value)}
+                        value={description}
+                        onChange={(event) => setDescription(event.target.value)}
                         placeholder="Type your car description here..."
                       />
                     </Form.Group>
                     <small className="form-text text-muted">
-                      {text.length} / {textMaxLength} characters
+                      {description.length} / {textMaxLength} characters
                     </small>
 
                     {/* availableAt */}
@@ -318,7 +318,7 @@ function CreateCar() {
                       </Col>
                     </Form.Group>
 
-                    {/* Options */}
+                    {/* Options dan Specs */}
                     <Form.Group as={Col} className="container mt-3">
                       <Form.Label row sm={3}>
                         Options

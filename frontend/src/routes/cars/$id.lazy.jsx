@@ -165,7 +165,6 @@ function CarsDetail() {
                       <ListGroup.Item key={index}>{option}</ListGroup.Item>
                     ))}
                   </ListGroup>
-
                   {/* car specs */}
                   <label className="mt-3 fw-semibold">Specifications</label>
                   <ListGroup>
