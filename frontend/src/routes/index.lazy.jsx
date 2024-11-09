@@ -1,101 +1,541 @@
-import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import * as React from "react";
+import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Table from "react-bootstrap/Table";
+import BreadCrumb from "react-bootstrap/BreadCrumb";
+import Pagination from "react-bootstrap/Pagination";
+import Spinner from "react-bootstrap/Spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getUsers } from "../services/auth";
+import { getCars } from "../services/cars";
+import { getModels } from "../services/models";
+import { getManufactures } from "../services/manufactures";
+import { getTransmissions } from "../services/transmissions";
+import { getTypeCars } from "../services/types";
+import { faGripLinesVertical } from "@fortawesome/free-solid-svg-icons";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
 });
 
 function Index() {
-  const { token, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const { user, token } = useSelector((state) => state.auth);
+
+  const [users, setUsers] = useState([]);
+  const [cars, setCars] = useState([]);
+  const [models, setModels] = useState([]);
+  const [manufactures, setManufactures] = useState([]);
+  const [transmissions, setTransmissions] = useState([]);
+  const [types, setTypeCars] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // State for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Tentukan jumlah item per halaman
 
   useEffect(() => {
-    // Check if there is a token
-    if (!token) {
-      navigate({ to: "/login" });
+    const getAllData = async () => {
+      setIsLoading(true);
+      try {
+        const [
+          userData,
+          carData,
+          modelData,
+          manufactureData,
+          transmissionData,
+          typeData,
+        ] = await Promise.all([
+          getUsers(),
+          getCars(),
+          getModels(),
+          getManufactures(),
+          getTransmissions(),
+          getTypeCars(),
+        ]);
+
+        setUsers(userData.data || []); // Ensure it's an array
+        setCars(carData.data || []); // Ensure it's an array
+        setModels(modelData.data || []); // Ensure it's an array
+        setManufactures(manufactureData.data || []); // Ensure it's an array
+        setTransmissions(transmissionData.data || []); // Ensure it's an array
+        setTypeCars(typeData.data || []); // Ensure it's an array
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (token) {
+      getAllData();
     }
-  }, [navigate, token]);
+  }, [token]);
+
+  if (!token) {
+    navigate({ to: "/login" });
+  }
+
+  if (isLoading) {
+    return (
+      <Row className="mt-5">
+        <Col className="text-center">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </Col>
+      </Row>
+    );
+  }
+
+  const paginate = (data) => {
+    if (!Array.isArray(data)) return []; // Ensure data is an array
+    const totalPages = Math.ceil(data.length / itemsPerPage);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    return data.slice(indexOfFirstItem, indexOfLastItem);
+  };
+
+  // Fungsi untuk beralih halaman
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="p-4">
-      <Container>
-        {/* Welcome Section */}
-        <Row className="mb-4">
-          <Col>
-            <h3 className="mb-2 fw-bold">Welcome to BCR Management</h3>
-            <h5>You're logged in as {user?.name}</h5>
-          </Col>
-        </Row>
+    <Container className="my-4">
+      <BreadCrumb>
+        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+          Dashboard
+        </BreadCrumb.Item>
+        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/cars" }}>
+          Cars
+        </BreadCrumb.Item>
+      </BreadCrumb>
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <h4 className="fw-bold mb-3 mb-md-0">Dashboard</h4>
+      </div>
 
-        {/* Dashboard Widgets Section */}
-        <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-          {/* Widget 1 */}
-          <Col>
-            <Card className="shadow-sm">
-              <Card.Body>
-                <Card.Title>Total Sales</Card.Title>
-                <Card.Text>
-                  <h5>$12,350</h5>
-                  <small>Since last month</small>
-                </Card.Text>
-                <Button variant="primary" className="w-100">
-                  View Sales
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
+      {/* List Users */}
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <h5 className="fw-bold mb-3 mb-md-0">
+          <FontAwesomeIcon icon={faGripLinesVertical} className="me-2" />
+          List Users
+        </h5>
+      </div>
+      <div className="table-responsive mt-4">
+        <Table bordered hover className="mb-0">
+          <thead className="text-center">
+            <tr>
+              <th>No</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginate(users).length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center">
+                  <strong>Data is not found!</strong>
+                </td>
+              </tr>
+            ) : (
+              paginate(users).map((user, index) => (
+                <tr key={user.id}>
+                  <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td>{user.createdAt}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
 
-          {/* Widget 2 */}
-          <Col>
-            <Card className="shadow-sm">
-              <Card.Body>
-                <Card.Title>Orders Pending</Card.Title>
-                <Card.Text>
-                  <h5>25</h5>
-                  <small>New orders waiting</small>
-                </Card.Text>
-                <Button variant="warning" className="w-100">
-                  View Orders
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
+      {/* Pagination for Users */}
+      {users.length > 0 && (
+        <Pagination className="mt-4 justify-content-center">
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[...Array(Math.ceil(users.length / itemsPerPage)).keys()].map(
+            (number) => (
+              <Pagination.Item
+                key={number + 1}
+                active={currentPage === number + 1}
+                onClick={() => handlePageChange(number + 1)}
+              >
+                {number + 1}
+              </Pagination.Item>
+            )
+          )}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === Math.ceil(users.length / itemsPerPage)}
+          />
+        </Pagination>
+      )}
 
-          {/* Widget 3 */}
-          <Col>
-            <Card className="shadow-sm">
-              <Card.Body>
-                <Card.Title>Customers</Card.Title>
-                <Card.Text>
-                  <h5>230</h5>
-                  <small>Active customers</small>
-                </Card.Text>
-                <Button variant="success" className="w-100">
-                  Manage Customers
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
+      {/* List Cars */}
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4">
+        <h5 className="fw-bold mb-3 mb-md-0">
+          <FontAwesomeIcon icon={faGripLinesVertical} className="me-2" />
+          List Cars
+        </h5>
+      </div>
+      <div className="table-responsive mt-4">
+        <Table bordered hover className="mb-0">
+          <thead className="text-center">
+            <tr>
+              <th>No</th>
+              <th>Plate</th>
+              <th>Model</th>
+              <th>Manufacture</th>
+              <th>Transmission</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginate(cars).length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center">
+                  <strong>Data is not found!</strong>
+                </td>
+              </tr>
+            ) : (
+              paginate(cars).map((car, model, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{car?.plate || "N/A"}</td>
+                  <td>
+                    {models.find((m) => m.id === car.modelId)?.name || "N/A"}
+                  </td>
+                  <td>
+                    {manufactures.find(
+                      (man) =>
+                        man.id ===
+                        models.find((m) => m.id === car.modelId)?.manufactureId
+                    )?.name || "N/A"}
+                  </td>
+                  <td>
+                    {transmissions.find(
+                      (tran) =>
+                        tran.id ===
+                        models.find((m) => m.id === car.modelId)?.transmissionId
+                    )?.name || "N/A"}
+                  </td>
+                  <td>
+                    {types.find((t) => t.id === car.typeId)?.name || "N/A"}
+                  </td>
+                  <td>{car?.description || "N/A"}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
 
-          {/* Widget 4 */}
-          <Col>
-            <Card className="shadow-sm">
-              <Card.Body>
-                <Card.Title>New Products</Card.Title>
-                <Card.Text>
-                  <h5>18</h5>
-                  <small>Recently added products</small>
-                </Card.Text>
-                <Button variant="info" className="w-100">
-                  View Products
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+      {/* Pagination for Cars */}
+      {cars.length > 0 && (
+        <Pagination className="mt-4 justify-content-center">
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[...Array(Math.ceil(cars.length / itemsPerPage)).keys()].map(
+            (number) => (
+              <Pagination.Item
+                key={number + 1}
+                active={currentPage === number + 1}
+                onClick={() => handlePageChange(number + 1)}
+              >
+                {number + 1}
+              </Pagination.Item>
+            )
+          )}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === Math.ceil(cars.length / itemsPerPage)}
+          />
+        </Pagination>
+      )}
+
+      {/* List Cars */}
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4">
+        <h5 className="fw-bold mb-3 mb-md-0">
+          <FontAwesomeIcon icon={faGripLinesVertical} className="me-2" />
+          List Models
+        </h5>
+      </div>
+      <div className="table-responsive mt-4">
+        <Table bordered hover className="mb-0">
+          <thead className="text-center">
+            <tr>
+              <th>No</th>
+              <th>Model</th>
+              <th>Year</th>
+              <th>Rent Cost</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginate(models).length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center">
+                  <strong>Data is not found!</strong>
+                </td>
+              </tr>
+            ) : (
+              paginate(models).map((model, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{model?.name}</td>
+                  <td>{model?.year}</td>
+                  <td>{model?.rentPerDay}</td>
+                  <td>{model?.createdAt}</td>
+                  <td>{model?.updatedAt}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
+
+      {/* Pagination for Cars */}
+      {cars.length > 0 && (
+        <Pagination className="mt-4 justify-content-center">
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[...Array(Math.ceil(cars.length / itemsPerPage)).keys()].map(
+            (number) => (
+              <Pagination.Item
+                key={number + 1}
+                active={currentPage === number + 1}
+                onClick={() => handlePageChange(number + 1)}
+              >
+                {number + 1}
+              </Pagination.Item>
+            )
+          )}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === Math.ceil(cars.length / itemsPerPage)}
+          />
+        </Pagination>
+      )}
+
+      {/* List Manufactures */}
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <h5 className="fw-bold mb-3 mb-md-0">
+          <FontAwesomeIcon icon={faGripLinesVertical} className="me-2" />
+          List Manufactures
+        </h5>
+      </div>
+      <div className="table-responsive mt-4">
+        <Table bordered hover className="mb-0">
+          <thead className="text-center">
+            <tr>
+              <th>No</th>
+              <th>Manufacture</th>
+              <th>Country</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginate(manufactures).length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center">
+                  <strong>Data is not found!</strong>
+                </td>
+              </tr>
+            ) : (
+              paginate(manufactures).map((manufacture, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{manufacture?.name}</td>
+                  <td>{manufacture?.country}</td>
+                  <td>{manufacture?.createdAt}</td>
+                  <td>{manufacture?.updatedAt}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
+
+      {/* Pagination for Users */}
+      {manufactures.length > 0 && (
+        <Pagination className="mt-4 justify-content-center">
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[...Array(Math.ceil(manufactures.length / itemsPerPage)).keys()].map(
+            (number) => (
+              <Pagination.Item
+                key={number + 1}
+                active={currentPage === number + 1}
+                onClick={() => handlePageChange(number + 1)}
+              >
+                {number + 1}
+              </Pagination.Item>
+            )
+          )}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={
+              currentPage === Math.ceil(manufactures.length / itemsPerPage)
+            }
+          />
+        </Pagination>
+      )}
+
+      {/* List Transmissions */}
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <h5 className="fw-bold mb-3 mb-md-0">
+          <FontAwesomeIcon icon={faGripLinesVertical} className="me-2" />
+          List Transmissions
+        </h5>
+      </div>
+      <div className="table-responsive mt-4">
+        <Table bordered hover className="mb-0">
+          <thead className="text-center">
+            <tr>
+              <th>No</th>
+              <th>Transmission</th>
+              <th>Driver Type</th>
+              <th>Description</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginate(transmissions).length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center">
+                  <strong>Data is not found!</strong>
+                </td>
+              </tr>
+            ) : (
+              paginate(transmissions).map((transmission, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{transmission?.name}</td>
+                  <td>{transmission?.driveType}</td>
+                  <td>{transmission?.description}</td>
+                  <td>{transmission?.createdAt}</td>
+                  <td>{transmission?.updatedAt}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
+
+      {/* Pagination for Users */}
+      {transmissions.length > 0 && (
+        <Pagination className="mt-4 justify-content-center">
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[
+            ...Array(Math.ceil(transmissions.length / itemsPerPage)).keys(),
+          ].map((number) => (
+            <Pagination.Item
+              key={number + 1}
+              active={currentPage === number + 1}
+              onClick={() => handlePageChange(number + 1)}
+            >
+              {number + 1}
+            </Pagination.Item>
+          ))}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={
+              currentPage === Math.ceil(transmissions.length / itemsPerPage)
+            }
+          />
+        </Pagination>
+      )}
+
+      {/* List Types */}
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <h5 className="fw-bold mb-3 mb-md-0">
+          <FontAwesomeIcon icon={faGripLinesVertical} className="me-2" />
+          List Types
+        </h5>
+      </div>
+      <div className="table-responsive mt-4">
+        <Table bordered hover className="mb-0">
+          <thead className="text-center">
+            <tr>
+              <th>No</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Capacity</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginate(manufactures).length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center">
+                  <strong>Data is not found!</strong>
+                </td>
+              </tr>
+            ) : (
+              paginate(types).map((type, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{type?.name}</td>
+                  <td>{type?.description}</td>
+                  <td>{type?.capacity}</td>
+                  <td>{type?.createdAt}</td>
+                  <td>{type?.updatedAt}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
+
+      {/* Pagination for Users */}
+      {types.length > 0 && (
+        <Pagination className="mt-4 justify-content-center">
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[...Array(Math.ceil(types.length / itemsPerPage)).keys()].map(
+            (number) => (
+              <Pagination.Item
+                key={number + 1}
+                active={currentPage === number + 1}
+                onClick={() => handlePageChange(number + 1)}
+              >
+                {number + 1}
+              </Pagination.Item>
+            )
+          )}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === Math.ceil(types.length / itemsPerPage)}
+          />
+        </Pagination>
+      )}
+    </Container>
   );
 }

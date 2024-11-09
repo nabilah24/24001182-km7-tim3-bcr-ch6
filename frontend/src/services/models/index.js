@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export const getModels = async (name, year, rentPerDay) => {
   const token = localStorage.getItem("token");
   let params;
@@ -9,6 +10,13 @@ export const getModels = async (name, year, rentPerDay) => {
   }
   if (rentPerDay) {
     params.rentPerDay = rentPerDay;
+=======
+export const getModels = async (nickName) => {
+  const token = localStorage.getItem("token");
+  let params;
+  if (nickName) {
+    params.nick_name = nickName;
+>>>>>>> 2a84cef90b2f0258a007dbd2f332b3a539407062
   }
 
   let url =

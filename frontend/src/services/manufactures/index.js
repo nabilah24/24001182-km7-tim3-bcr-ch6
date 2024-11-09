@@ -51,18 +51,18 @@ export const createManufacture = async (request) => {
   return result;
 };
 
-export const updateManufacture = async (request) => {
+export const updateManufacture = async (id, request) => {
   const token = localStorage.getItem("token");
 
   const formData = new FormData();
   formData.append("name", request.name);
   formData.append("country", request.country);
 
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/manufactures`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/manufactures/${id}`, {
       headers: {
           authorization: `Bearer ${token}`,
       },
-      method: "POST",
+      method: "PUT",
       body: formData,
   });
 
