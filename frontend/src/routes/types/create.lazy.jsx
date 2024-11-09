@@ -1,13 +1,15 @@
-import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { createLazyFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { toast } from "react-toastify";
+import { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { createTypeCar } from "../../services/types/index";
-import { toast } from "react-toastify";
-import Protected from "../../components/";
+import Container from "react-bootstrap/Container";
+import BreadCrumb from "react-bootstrap/BreadCrumb";
+import { createTypeCar } from "../../services/types";
+import Protected from "../../components/Auth/Protected";
 
 export const Route = createLazyFileRoute("/types/create")({
   component: () => (
@@ -36,7 +38,7 @@ function CreateTypeCar() {
 
     const result = await createTypeCar(request);
     if (result?.success) {
-      navigate({ to: "/" });
+      navigate({ to: "/types" });
       toast.success("Car type created successfully!");
       return;
     }
@@ -45,64 +47,83 @@ function CreateTypeCar() {
   };
 
   return (
-    <Row className="mt-5">
-      <Col className="offset-md-3">
-        <Card>
-          <Card.Header className="text-center">Create Car Type</Card.Header>
-          <Card.Body>
-            <Form onSubmit={onSubmit}>
-              <Form.Group as={Row} className="mb-3" controlId="name">
-                <Form.Label column sm={3}>
-                  Name
-                </Form.Label>
-                <Col sm="9">
-                  <Form.Control
-                    type="text"
-                    placeholder="Name"
-                    required
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                  />
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} className="mb-3" controlId="description">
-                <Form.Label column sm={3}>
-                  Description
-                </Form.Label>
-                <Col sm="9">
-                  <Form.Control
-                    type="text"
-                    placeholder="Description"
-                    required
-                    value={description}
-                    onChange={(event) => setDescription(event.target.value)}
-                  />
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} className="mb-3" controlId="capacity">
-                <Form.Label column sm={3}>
-                  Capacity
-                </Form.Label>
-                <Col sm="9">
-                  <Form.Control
-                    type="number"
-                    placeholder="Capacity"
-                    required
-                    value={capacity}
-                    onChange={(event) => setCapacity(event.target.value)}
-                  />
-                </Col>
-              </Form.Group>
-              <div className="d-grid gap-2">
-                <Button type="submit" variant="primary">
-                  Create Car Type
-                </Button>
-              </div>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Col>
-      <Col md={3}></Col>
-    </Row>
+    <Container className="my-4">
+      <BreadCrumb>
+        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/types" }}>
+          Dashboard
+        </BreadCrumb.Item>
+        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/types" }}>
+          types
+        </BreadCrumb.Item>
+      </BreadCrumb>
+      <h4 className="fw-bold mb-3">Add Car Type</h4>
+      <Row className="mt-5">
+        <Col md={9}>
+          <Card>
+            <Card.Header as="h5" className="text-center">
+              Add Car Type Data
+            </Card.Header>
+            <Card.Body>
+              <Form onSubmit={onSubmit}>
+                <Form.Group as={Row} className="mb-4" controlId="name">
+                  <Form.Label column sm={3} className="fw-semibold">
+                    Name
+                  </Form.Label>
+                  <Col sm={9}>
+                    <Form.Control
+                      type="text"
+                      placeholder="Please enter the name of Car Type"
+                      required
+                      value={name}
+                      onChange={(event) => {
+                        setName(event.target.value);
+                      }}
+                    />
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="mb-4" controlId="name">
+                  <Form.Label column sm={3} className="fw-semibold">
+                    Description
+                  </Form.Label>
+                  <Col sm={9}>
+                    <Form.Control
+                      type="text"
+                      placeholder="Please enter the description of Car Type"
+                      required
+                      value={description}
+                      onChange={(event) => {
+                        setDescription(event.target.value);
+                      }}
+                    />
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="mb-4" controlId="name">
+                  <Form.Label column sm={3} className="fw-semibold">
+                    Capacity
+                  </Form.Label>
+                  <Col sm={9}>
+                    <Form.Control
+                      type="number"
+                      required
+                      value={capacity}
+                      onChange={(event) => {
+                        setCapacity(event.target.value);
+                      }}
+                    />
+                  </Col>
+                </Form.Group>
+                <Row className="mt-4">
+                  <Col className="text-primary">
+                    <Button variant="primary" type="submit" className="me-2">
+                      Submit
+                    </Button>
+                  </Col>
+                </Row>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }

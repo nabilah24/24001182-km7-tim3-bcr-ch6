@@ -6,7 +6,7 @@ export const getCars = async (nickName) => {
   }
 
   let url =
-    `${import.meta.env.VITE_API_URL}/students` + new URLSearchParams(params);
+    `${import.meta.env.VITE_API_URL}/cars` + new URLSearchParams(params);
 
   const response = await fetch(url, {
     headers: {

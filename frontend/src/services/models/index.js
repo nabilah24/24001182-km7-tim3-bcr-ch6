@@ -1,6 +1,12 @@
-export const getModels = async () => {
+export const getModels = async (nickName) => {
   const token = localStorage.getItem("token");
-  let url = `${import.meta.env.VITE_API_URL}/models`;
+  let params;
+  if (nickName) {
+    params.nick_name = nickName;
+  }
+
+  let url =
+    `${import.meta.env.VITE_API_URL}/models` + new URLSearchParams(params);
 
   const response = await fetch(url, {
     headers: {

@@ -19,6 +19,8 @@ exports.addNewCar = async (data, file) => {
   // Parse modelId and typeId to numbers
   data.modelId = Number(data.modelId);
   data.typeId = Number(data.typeId);
+  data.manufactureId = Number(data.manufactureId);
+  data.transmissionId = Number(data.transmissionId);
 
   // Upload file if provided
   if (file?.image) {
@@ -30,7 +32,7 @@ exports.addNewCar = async (data, file) => {
 };
 
 exports.updateCar = async (id, data, file) => {
-  const existingCar = carRepository.getCarById(id);
+  const existingCar = await carRepository.getCarById(id);
   if (!existingCar) {
     throw new NotFoundError("Car Data Not Found!");
   }

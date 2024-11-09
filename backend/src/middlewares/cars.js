@@ -74,6 +74,18 @@ exports.validateAddCar = (req, res, next) => {
         .refine((val) => !isNaN(Number(val)), {
           message: "Invalid typeId",
         }),
+      manufactureId: z
+        .string()
+        .transform((val) => val.trim())
+        .refine((val) => !isNaN(Number(val)), {
+          message: "Invalid manufactureId",
+        }),
+      transmissionId: z
+        .string()
+        .transform((val) => val.trim())
+        .refine((val) => !isNaN(Number(val)), {
+          message: "Invalid transmissionId",
+        }),
       availableAt: z.string().refine((date) => !isNaN(Date.parse(date)), {
         message: "Invalid date format",
       }),
@@ -125,6 +137,7 @@ exports.validateAddCar = (req, res, next) => {
     return schema.safeParse(file);
   };
 
+  
   const resultValidateFiles = validateFileBody(req.files);
   if (!resultValidateFiles.success) {
     throw new BadRequestError(resultValidateFiles.error.errors);
@@ -155,6 +168,8 @@ exports.validateUpdateCar = (req, res, next) => {
       plate: z.string(),
       modelId: z.string(),
       typeId: z.string(),
+      manufactureId: z.string(),
+      transmissionId: z.string(),
       availableAt: z.string().refine((date) => !isNaN(Date.parse(date)), {
         message: "Invalid date format",
       }),

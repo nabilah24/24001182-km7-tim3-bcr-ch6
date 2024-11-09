@@ -1,34 +1,48 @@
-import { createLazyFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Container, Row, Col, Table, Pagination } from 'react-bootstrap'
-import { getTypeCars } from '../../services/types/index'
-import BreadCrumb from '../../components/BreadCrumb/index'
+import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Table from "react-bootstrap/Table";
+import BreadCrumb from "react-bootstrap/BreadCrumb";
+import Pagination from "react-bootstrap/Pagination";
+import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { getTypeCars } from "../../services/types/index";
+import TypeItem from "../../components/Type/typeItem";
 
-export const Route = createLazyFileRoute('/types/')({
-  component: Types,
-})
+export const Route = createLazyFileRoute("/types/")({
+  component: TypeIndex,
+});
 
-function Types() {
-  const { token } = useSelector((state) => state.auth)
+function TypeIndex() {
+  const { user, token } = useSelector((state) => state.auth);
 
-  const [types, setTypeCars] = useState([])
-  const [isLoading, setIsLoading] = useState([])
+  const [types, setTypeCars] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // State for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Tentukan jumlah item per halaman
 
   useEffect(() => {
     const getTypeCarData = async () => {
-      setIsLoading(true)
-      const result = await getTypeCarData()
+      setIsLoading(true);
+      const result = await getTypeCars();
       if (result.success) {
-        setTypeCars(result.data)
+        const sortedTypes = result.data.sort((a, b) => a.id - b.id);
+        setTypeCars(sortedTypes);
       }
-      setIsLoading(false)
-    }
+      setIsLoading(false);
+    };
 
     if (token) {
-      getTypeCarData()
+      getTypeCarData();
     }
-  }, [token])
+  }, [token]);
 
   if (!token) {
     return (
@@ -39,113 +53,107 @@ function Types() {
           </h1>
         </Col>
       </Row>
-    )
+    );
   }
 
   if (isLoading) {
     return (
-      <Row className="mt-4">
-        <h1>Loading...</h1>
+      <Row className="mt-5">
+        <Col className="text-center">
+          <Spinner animation="border" role="status">
+            <span className="visualy-hidden">Loading...</span>
+          </Spinner>
+        </Col>
       </Row>
-    )
+    );
   }
 
+  // Hitung total halaman dan item yang ditampilkan berdasarkan halaman
+  const totalPages = Math.ceil(types.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = types.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Fungsi untuk beralih halaman
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
-    <Row className="mt-4">
-      {types.length === 0 ? (
-        <h1>Car type data is not found!</h1>
-      ) : (
-        <Container className="p-2 mt-2" style={{ marginLeft: '12vw' }}>
-          <BreadCrumb />
-          <Row className="d-flex ">
-            <Col>
-              <h4 className="fw-bold">Dashboard</h4>
-            </Col>
-          </Row>
+    <Container className="my-4">
+      <BreadCrumb>
+        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+          Dashboard
+        </BreadCrumb.Item>
+        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/types" }}>
+          Types
+        </BreadCrumb.Item>
+      </BreadCrumb>
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <h4 className="fw-bold mb-3 mb-md-0">Car Type List</h4>
+        {user?.roleId === 1 && (
+          <Button
+            as={Link}
+            href={`/types/create`}
+            variant="primary"
+            className="rounded-0"
+          >
+            <FontAwesomeIcon icon={faPlus} className="me-2" />
+            <span>Add Type Car</span>
+          </Button>
+        )}
+      </div>
 
-          {/* List Order Table */}
-          <Row className="mt-4">
-            <Col>
-              <h5 className="fw-bold">List Order</h5>
-              <Table striped bordered hover responsive>
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>User Email</th>
-                    <th>Car</th>
-                    <th>Start Rent</th>
-                    <th>Finish Rent</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Sample Data, ideally should be mapped from a state or props */}
-                  {Array.from({ length: 10 }, (_, i) => (
-                    <tr key={i}>
-                      <td>{i + 1}</td>
-                      <td>User Email</td>
-                      <td>Car</td>
-                      <td>Start Rent</td>
-                      <td>Finish Rent</td>
-                      <td>Price</td>
-                      <td>Status</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-
-              {/* Pagination */}
-              <Pagination>
-                <Pagination.First />
-                <Pagination.Prev />
-                <Pagination.Item active>{1}</Pagination.Item>
-                <Pagination.Item>{2}</Pagination.Item>
-                <Pagination.Item>{3}</Pagination.Item>
-                <Pagination.Item>{4}</Pagination.Item>
-                <Pagination.Next />
-                <Pagination.Last />
-              </Pagination>
-            </Col>
-          </Row>
-
-          {/* List Car Table */}
-          <Row className="mt-4">
-            <Col>
-              <h5 className="fw-bold">List Car</h5>
-              <Table striped bordered hover responsive>
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Start Rent</th>
-                    <th>Finish Rent</th>
-                    <th>Created at</th>
-                    <th>Updated at</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Sample Data */}
-                  {Array.from({ length: 10 }, (_, i) => (
-                    <tr key={i}>
-                      <td>{i + 1}</td>
-                      <td>Name</td>
-                      <td>Category</td>
-                      <td>Price</td>
-                      <td>Start Rent</td>
-                      <td>Finish Rent</td>
-                      <td>Created at</td>
-                      <td>Updated at</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Col>
-          </Row>
-        </Container>
+      <div className="table-responsive mt-4">
+        <Table bordered hover className="mb-0">
+          <thead className="text-center">
+            <tr>
+              <th>No</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Capacity</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="text-center">
+                  <strong>Car type data is not found!</strong>
+                </td>
+              </tr>
+            ) : (
+              currentItems.map((type, index) => (
+                <TypeItem
+                  type={type}
+                  key={type?.id}
+                  index={(currentPage - 1) * itemsPerPage + index + 1}
+                />
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
+      {/* Pagination */}
+      {types.length > 0 && (
+        <Pagination className="mt-4 justify-content-center">
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[...Array(totalPages).keys()].map((number) => (
+            <Pagination.Item
+              key={number + 1}
+              active={currentPage === number + 1}
+              onClick={() => handlePageChange(number + 1)}
+            >
+              {number + 1}
+            </Pagination.Item>
+          ))}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          />
+        </Pagination>
       )}
-    </Row>
-  )
+    </Container>
+  );
 }
