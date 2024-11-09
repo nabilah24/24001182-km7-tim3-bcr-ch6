@@ -1,15 +1,19 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Container from "react-bootstrap/Container";
-import Image from "react-bootstrap/Image";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../../redux/slices/auth";
 import { profile } from "../../services/auth";
 import Swal from "sweetalert2";
-import { Dropdown, NavItem, NavLink } from "react-bootstrap";
+import {
+  Container,
+  Dropdown,
+  Nav,
+  Navbar,
+  NavDropdown,
+  NavItem,
+  NavLink,
+  Image,
+} from "react-bootstrap";
 
 const NavBar = () => {
   const dispatch = useDispatch();

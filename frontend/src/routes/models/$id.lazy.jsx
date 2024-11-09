@@ -1,16 +1,12 @@
 import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { deleteModel, getModelDetail } from "../../services/models";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { Breadcrumb, Container } from "react-bootstrap";
+import { Row, Col, Card, Button, Breadcrumb, Container } from "react-bootstrap";
 
 export const Route = createLazyFileRoute("/models/$id")({
   component: ModelsDetail,

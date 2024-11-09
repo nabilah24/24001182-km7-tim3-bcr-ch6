@@ -1,7 +1,5 @@
-import { Card, Button, Row, Col } from "react-bootstrap";
-import { Link, useNavigate } from "@tanstack/react-router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { Card, Button } from "react-bootstrap";
+import { Link } from "@tanstack/react-router";
 
 const CarItem = ({ car }) => {
   const startRent = new Date(car.availableAt);
