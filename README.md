@@ -1,1 +1,28 @@
-# 24001182-km7-tim3-bcr-ch6
+# FSW-1 Binar Academy
+
+# TIM 3
+
+# Challenge 6
+
+Creating CRUD Models & Cars:
+Ryan Nicholas Purba
+
+Creating CRUD Types:
+Nabilah Zakiyah Salmaa Firdaus
+
+Creating CRUD Manufactures & Transmissions:
+Ridhwan Tsalasah Putra
+
+Info Login
+
+Admin:
+
+- Email: mferdybbas23@gmail.com
+- Pw: operAtioNAuthe311
+
+User:
+
+- Email: henryhotang23@gmail.com
+- Pw: henryAccount4556
+
+------------------------TIM 3-----------------------------------
