@@ -1,12 +1,12 @@
 import * as React from "react";
-import { createLazyFileRoute, Link } from "@tanstack/react-router";
+import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
-import BreadCrumb from "react-bootstrap/Breadcrumb";
+import BreadCrumb from "react-bootstrap/BreadCrumb";
 import Pagination from "react-bootstrap/Pagination";
 import Spinner from "react-bootstrap/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +23,7 @@ export const Route = createLazyFileRoute("/")({
 });
 
 function Index() {
+  const navigate = useNavigate();
   const { user, token } = useSelector((state) => state.auth);
 
   const [users, setUsers] = useState([]);
@@ -77,14 +78,8 @@ function Index() {
 
 
   if (!token) {
-    return (
-      <Row className="mt-4">
-        <Col>
-          <h1 className="text-center">Please login first to get the data!</h1>
-        </Col>
-      </Row>
-    );
-  }
+      navigate({ to: "/login" });
+    }
 
   if (isLoading) {
     return (
@@ -138,8 +133,6 @@ function Index() {
               <th>No</th>
               <th>Username</th>
               <th>Email</th>
-              <th>Password</th>
-              <th>Photo Profile</th>
               <th>Created At</th>
             </tr>
           </thead>
