@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { 
+import {
   faWrench,
   faHome,
   faCarSide,
@@ -22,43 +22,68 @@ const SideBar = ({ children }) => {
             >
               <span className="fs-5 d-none d-sm-inline">Menu</span>
             </Link>
-            <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+            <ul
+              className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+              id="menu"
+            >
               <li className="nav-item my-2">
                 <Link to="/" className="nav-link align-middle px-0 text-white">
-                  <FontAwesomeIcon icon={faHome} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Home</span>
+                  <FontAwesomeIcon icon={faHome} className="fs-4" />{" "}
+                  <span className="ms-4 d-none d-sm-inline">Dashboards</span>
+                </Link>
+              </li>
+
+              <li className="my-2">
+                <Link
+                  to="/cars"
+                  data-bs-toggle="collapse"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <FontAwesomeIcon icon={faCarSide} className="fs-4" />{" "}
+                  <span className="ms-4 d-none d-sm-inline">Cars</span>
                 </Link>
               </li>
               <li className="my-2">
-                <Link to="/models" className="nav-link px-0 align-middle text-white">
-                  <FontAwesomeIcon icon={faGear} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Models</span>
+                <Link
+                  to="/models"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <FontAwesomeIcon icon={faGear} className="fs-4" />{" "}
+                  <span className="ms-4 d-none d-sm-inline">Models</span>
                 </Link>
               </li>
               <li className="my-2">
-                <Link to="/cars" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
-                  <FontAwesomeIcon icon={faCarSide} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Cars</span>
+                <Link
+                  to="/manufactures"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <FontAwesomeIcon icon={faIndustry} className="fs-4" />{" "}
+                  <span className="ms-4 d-none d-sm-inline">Manufactures</span>
                 </Link>
               </li>
               <li className="my-2">
-                <Link to="/types" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
-                  <FontAwesomeIcon icon={faGears} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Types</span>
+                <Link
+                  to="/transmissions"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <FontAwesomeIcon icon={faWrench} className="fs-4" />{" "}
+                  <span className="ms-4 d-none d-sm-inline">Transmissions</span>
                 </Link>
               </li>
               <li className="my-2">
-                <Link to="/manufactures" className="nav-link px-0 align-middle text-white">
-                  <FontAwesomeIcon icon={faIndustry} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Manufactures</span>
-                </Link>
-              </li>
-              <li className="my-2">
-                <Link to="/transmissions" className="nav-link px-0 align-middle text-white">
-                  <FontAwesomeIcon icon={faWrench} className="fs-4" /> <span className="ms-4 d-none d-sm-inline">Transmissions</span>
+                <Link
+                  to="/types"
+                  data-bs-toggle="collapse"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <FontAwesomeIcon icon={faGears} className="fs-4" />{" "}
+                  <span className="ms-4 d-none d-sm-inline">Types</span>
                 </Link>
               </li>
             </ul>
           </div>
         </div>
-        <div className="col py-3">
-          {children}
-        </div>
+        <div className="col py-3">{children}</div>
       </div>
     </div>
   );

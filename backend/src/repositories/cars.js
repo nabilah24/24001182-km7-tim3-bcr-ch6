@@ -8,6 +8,7 @@ exports.getAllCars = async (plate, available, availableAt) => {
   let query = {
     include: {
       models: true,
+      transmissions: true,
       types: true,
     },
   };
@@ -64,6 +65,8 @@ exports.addNewCar = async (data) => {
     include: {
       models: true,
       types: true,
+      manufactures: true,
+      transmissions: true,
     },
   });
 
@@ -78,6 +81,8 @@ exports.updateCar = async (id, data) => {
     include: {
       models: true,
       types: true,
+      manufactures: true,
+      transmissions: true,
     },
     data,
   });
@@ -93,6 +98,8 @@ exports.deleteCarById = async (id) => {
     include: {
       models: true,
       types: true,
+      manufactures: true,
+      transmissions: true,
     },
   });
 
