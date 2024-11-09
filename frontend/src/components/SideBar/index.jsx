@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faWrench,
   faHome,
-  faWrench,
-  faHome,
   faCarSide,
   faGear,
   faGears,
@@ -84,10 +82,6 @@ const SideBar = ({ children }) => {
               </li>
             </Nav>
           </div>
-        </div>
-        <div className="col py-3">{children}</div>
-      </div>
-    </div>
         </div>
         <div className="col py-3">{children}</div>
       </div>
