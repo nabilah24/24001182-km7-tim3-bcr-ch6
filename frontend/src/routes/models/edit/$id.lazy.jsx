@@ -60,11 +60,11 @@ function EditModel() {
       setLoading(true);
       const result = await getModelDetail(id);
       if (result?.success) {
-        setName(result.data?.name);
-        setManufactureId(result.data?.manufactureId);
-        setTransmissionId(result.data?.transmissionId);
-        setYear(result.data?.year);
-        setRentPerDay(result.data?.rentPerDay);
+        setName(result.data.name);
+        setManufactureId(result.data.manufactureId);
+        setTransmissionId(result.data.transmissionId);
+        setYear(result.data.year);
+        setRentPerDay(result.data.rentPerDay);
         setIsNotFound(false);
       } else {
         setIsNotFound(true);
@@ -94,7 +94,7 @@ function EditModel() {
     };
     const result = await updateModel(id, request);
     if (result?.success) {
-      navigate({ to: `/models/` });
+      navigate({ to: `/models/${id}` });
       return;
     }
 
@@ -160,7 +160,11 @@ function EditModel() {
                       {!loading &&
                         manufactures.length > 0 &&
                         manufactures.map((manufacture) => (
-                          <option key={manufacture?.id} value={manufacture?.id}>
+                          <option
+                            key={manufacture?.id}
+                            value={manufacture?.id}
+                            selected={manufacture.id == manufactureId}
+                          >
                             {manufacture?.name}
                           </option>
                         ))}
@@ -191,6 +195,7 @@ function EditModel() {
                           <option
                             key={transmission?.id}
                             value={transmission?.id}
+                            selected={transmission.id == transmissionId}
                           >
                             {transmission?.name}
                           </option>

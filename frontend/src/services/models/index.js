@@ -71,8 +71,8 @@ export const updateModel = async (id, request) => {
 
   const formData = new FormData();
   formData.append("name", request.name);
-  formData.append("manufactureId", request.modelId);
-  formData.append("transmissionId", request.typeId);
+  formData.append("manufactureId", request.manufactureId);
+  formData.append("transmissionId", request.transmissionId);
   formData.append("year", request.year);
   formData.append("rentPerDay", request.rentPerDay);
 
