@@ -17,7 +17,7 @@ const CarItem = ({ car }) => {
   return (
     <Card
       style={{ width: "18rem" }}
-      className="shadow-sm text-decoration-none rounded-1 me-3 my-3 py-3"
+      className="shadow-sm text-decoration-none rounded-1 me-3 mb-3 py-3"
     >
       <Card.Img variant="top" src={car?.image} />
       <Card.Body>
