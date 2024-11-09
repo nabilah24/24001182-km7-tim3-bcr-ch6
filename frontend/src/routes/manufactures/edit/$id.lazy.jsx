@@ -1,79 +1,88 @@
-import { createLazyFileRoute, useNavigate, Link } from '@tanstack/react-router';
-import { updateManufacture, getDetailManufacture } from '../../../services/manufactures';
-import { useState, useEffect } from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import BreadCrumb from 'react-bootstrap/BreadCrumb';
-import Card from 'react-bootstrap/Card';
-import Protected from '../../../components/Auth/Protected';
+import { createLazyFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import {
+  updateManufacture,
+  getDetailManufacture,
+} from "../../../services/manufactures";
+import { useState, useEffect } from "react";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
+import Card from "react-bootstrap/Card";
+import Protected from "../../../components/Auth/Protected";
 
-export const Route = createLazyFileRoute('/manufactures/edit/$id')({
+export const Route = createLazyFileRoute("/manufactures/edit/$id")({
   component: () => (
     <Protected roles={[1]}>
-        <EditManufacture />
+      <EditManufacture />
     </Protected>
   ),
-})
+});
 
 function EditManufacture() {
-    const { id } = Route.useParams();
-    const navigate = useNavigate()
+  const { id } = Route.useParams();
+  const navigate = useNavigate();
 
-    const [name, setName] = useState("");
-    const [country, setCountry] = useState("");
-    const [isNotFound, setIsNotFound] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+  const [name, setName] = useState("");
+  const [country, setCountry] = useState("");
+  const [isNotFound, setIsNotFound] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const getDetailManufactureData = async (id) => {
-            setIsLoading(true);
-            const result = await getDetailManufacture(id);
-            if (result?.success) {
-                setName(result.data?.name);
-                setCountry(result.data?.country);
-                setIsNotFound(false);
-            } else {
-                setIsNotFound(true);
-            }
-            setIsLoading(false);
-        };
+  useEffect(() => {
+    const getDetailManufactureData = async (id) => {
+      setIsLoading(true);
+      const result = await getDetailManufacture(id);
+      if (result?.success) {
+        setName(result.data?.name);
+        setCountry(result.data?.country);
+        setIsNotFound(false);
+      } else {
+        setIsNotFound(true);
+      }
+      setIsLoading(false);
+    };
 
-        if (id) {
-            getDetailManufactureData(id);
-        }
-    }, [id]);
+    if (id) {
+      getDetailManufactureData(id);
+    }
+  }, [id]);
 
-    if (isNotFound) {
+  if (isNotFound) {
+    navigate({ to: "/manufactures" });
+    return;
+  }
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    const request = {
+      name,
+      country,
+    };
+    const result = await updateManufacture(id, request);
+    if (result?.success) {
       navigate({ to: "/manufactures" });
       return;
-  }
+    }
 
-    const onSubmit = async (event) => {
-        event.preventDefault()
-
-        const request = {
-        name,
-        country,
-        }
-        const result = await updateManufacture(id, request)
-        if (result?.success) {
-            navigate({ to: '/manufactures' })
-            return
-        }
-
-        toast.error(result?.message)
-  }
+    toast.error(result?.message);
+  };
   return (
     <Container className="my-4">
-      <BreadCrumb>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: '/manufactures' }}>
-          Manufactures
-        </BreadCrumb.Item>
-        <BreadCrumb.Item active>Update Manufacture</BreadCrumb.Item>
-      </BreadCrumb>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to="/manufactures">Manufactures</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to={`/manufactures/${id}`}>Detail</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Edit</Breadcrumb.Item>
+      </Breadcrumb>
       <h4 className="fw-bold mb-3">Update Manufacture</h4>
       <Row className="mt-5">
         <Col md={9}>
@@ -89,14 +98,14 @@ function EditManufacture() {
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control
-                            type="text"
-                            placeholder="name"
-                            required
-                            value={name}
-                            onChange={(event) => {
-                            setName(event.target.value);
-                            }}
-                        />
+                      type="text"
+                      placeholder="name"
+                      required
+                      value={name}
+                      onChange={(event) => {
+                        setName(event.target.value);
+                      }}
+                    />
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-4" controlId="country">
@@ -105,13 +114,13 @@ function EditManufacture() {
                   </Form.Label>
                   <Col sm={9}>
                     <Form.Control
-                        type="text"
-                        placeholder="country"
-                        required
-                        value={country}
-                        onChange={(event) => {
+                      type="text"
+                      placeholder="country"
+                      required
+                      value={country}
+                      onChange={(event) => {
                         setCountry(event.target.value);
-                        }}
+                      }}
                     />
                   </Col>
                 </Form.Group>
@@ -128,5 +137,5 @@ function EditManufacture() {
         </Col>
       </Row>
     </Container>
-  )
+  );
 }

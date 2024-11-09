@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import BreadCrumb from "react-bootstrap/BreadCrumb";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { getDetailTypeCar, updateTypeCar } from "../../../services/types";
 import { toast } from "react-toastify";
 import Protected from "../../../components/Auth/Protected";
@@ -75,19 +75,24 @@ function EditTypeCar() {
 
   return (
     <Container className="my-4">
-      <BreadCrumb>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
-          Dashboards
-        </BreadCrumb.Item>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/types" }}>
-          Types
-        </BreadCrumb.Item>
-        <h4 className="fw-bold mb-3">Update Type Car Data</h4>
-      </BreadCrumb>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to="/types">Types</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to={`/types/${id}`}>Detail</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Edit</Breadcrumb.Item>
+      </Breadcrumb>
       <Row className="mt-5">
         <Col md={9}>
           <Card>
-            <Card.Header as="h5" className="text-center">Edit Car Type</Card.Header>
+            <Card.Header as="h5" className="text-center">
+              Edit Car Type
+            </Card.Header>
             <Card.Body>
               <Form onSubmit={onSubmit}>
                 <Form.Group as={Row} className="mb-4" controlId="name">

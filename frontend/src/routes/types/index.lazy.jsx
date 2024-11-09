@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
-import BreadCrumb from "react-bootstrap/BreadCrumb";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
 import Pagination from "react-bootstrap/Pagination";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
@@ -79,14 +79,12 @@ function TypeIndex() {
 
   return (
     <Container className="my-4">
-      <BreadCrumb>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
-          Dashboard
-        </BreadCrumb.Item>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/types" }}>
-          Types
-        </BreadCrumb.Item>
-      </BreadCrumb>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Types</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
         <h4 className="fw-bold mb-3 mb-md-0">Car Type List</h4>
         {user?.roleId === 1 && (

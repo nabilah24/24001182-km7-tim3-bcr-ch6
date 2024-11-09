@@ -7,7 +7,7 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import BreadCrumb from "react-bootstrap/BreadCrumb";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { createTypeCar } from "../../services/types";
 import Protected from "../../components/Auth/Protected";
 
@@ -48,14 +48,15 @@ function CreateTypeCar() {
 
   return (
     <Container className="my-4">
-      <BreadCrumb>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/types" }}>
-          Dashboard
-        </BreadCrumb.Item>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/types" }}>
-          types
-        </BreadCrumb.Item>
-      </BreadCrumb>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to="/types">Types</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Create</Breadcrumb.Item>
+      </Breadcrumb>
       <h4 className="fw-bold mb-3">Add Car Type</h4>
       <Row className="mt-5">
         <Col md={9}>

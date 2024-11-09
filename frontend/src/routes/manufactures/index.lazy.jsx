@@ -1,5 +1,5 @@
 import Container from "react-bootstrap/Container";
-import BreadCrumb from "react-bootstrap/BreadCrumb";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
@@ -65,11 +65,12 @@ function IndexManufacture() {
 
   return (
     <Container className="my-4">
-      <BreadCrumb>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/manufactures" }}>
-          Manufactures
-        </BreadCrumb.Item>
-      </BreadCrumb>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Manufactures</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
         <h4 className="fw-bold mb-3 mb-md-0">Manufacture List</h4>
         {user?.roleId === 1 && (

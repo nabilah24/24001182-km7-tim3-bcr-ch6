@@ -1,7 +1,7 @@
 import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
-import BreadCrumb from "react-bootstrap/BreadCrumb";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
@@ -94,12 +94,15 @@ function TransmissionDetail() {
 
   return (
     <Container className="my-4">
-      <BreadCrumb>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: "/transmissions" }}>
-          Transmissions
-        </BreadCrumb.Item>
-        <BreadCrumb.Item active>Transmission Detail</BreadCrumb.Item>
-      </BreadCrumb>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to="/transmissions">Transmissions</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Detail</Breadcrumb.Item>
+      </Breadcrumb>
       <h4 className="fw-bold mb-3">Transmission Detail</h4>
       <Row className="mt-4">
         <Col md={6}>

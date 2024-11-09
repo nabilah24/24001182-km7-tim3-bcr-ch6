@@ -1,86 +1,92 @@
-import { createLazyFileRoute, useNavigate, Link } from '@tanstack/react-router';
+import { createLazyFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import {
   updateTransmission,
   getDetailTransmission,
-} from '../../../services/transmissions';
-import { toast } from 'react-toastify';
-import { useState, useEffect } from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import BreadCrumb from 'react-bootstrap/BreadCrumb';
-import Card from 'react-bootstrap/Card';
-import Protected from '../../../components/Auth/Protected';
+} from "../../../services/transmissions";
+import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
+import Card from "react-bootstrap/Card";
+import Protected from "../../../components/Auth/Protected";
 
-export const Route = createLazyFileRoute('/transmissions/edit/$id')({
+export const Route = createLazyFileRoute("/transmissions/edit/$id")({
   component: () => (
     <Protected roles={[1]}>
-        <EditTransmission />
+      <EditTransmission />
     </Protected>
   ),
-})
+});
 
 function EditTransmission() {
-  const { id } = Route.useParams()
-  const navigate = useNavigate()
+  const { id } = Route.useParams();
+  const navigate = useNavigate();
 
-  const [name, setName] = useState("")
-  const [driveType, setDriveType] = useState("")
-  const [description, setDescription] = useState("")
-  const [isNotFound, setIsNotFound] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [name, setName] = useState("");
+  const [driveType, setDriveType] = useState("");
+  const [description, setDescription] = useState("");
+  const [isNotFound, setIsNotFound] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getDetailTransmissionData = async (id) => {
-      setIsLoading(true)
-      const result = await getDetailTransmission(id)
+      setIsLoading(true);
+      const result = await getDetailTransmission(id);
       if (result?.success) {
-        setName(result.data?.name)
-        setDriveType(result.data?.driveType)
-        setDescription(result.data?.description)
-        setIsNotFound(false)
+        setName(result.data?.name);
+        setDriveType(result.data?.driveType);
+        setDescription(result.data?.description);
+        setIsNotFound(false);
       } else {
-        setIsNotFound(true)
+        setIsNotFound(true);
       }
-      setIsLoading(false)
-    }
+      setIsLoading(false);
+    };
 
     if (id) {
-      getDetailTransmissionData(id)
+      getDetailTransmissionData(id);
     }
-  }, [id])
+  }, [id]);
 
   if (isNotFound) {
-    navigate({ to: '/transmissions' })
-    return
+    navigate({ to: "/transmissions" });
+    return;
   }
 
   const onSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     const request = {
       name,
       driveType,
       description,
-    }
-    const result = await updateTransmission(id, request)
+    };
+    const result = await updateTransmission(id, request);
     if (result?.success) {
-      navigate({ to: '/transmissions' })
-      return
+      navigate({ to: "/transmissions" });
+      return;
     }
 
-    toast.error(result?.message)
-  }
+    toast.error(result?.message);
+  };
   return (
     <Container className="my-4">
-      <BreadCrumb>
-        <BreadCrumb.Item linkAs={Link} linkProps={{ to: '/transmissions' }}>
-          Transmissions
-        </BreadCrumb.Item>
-        <BreadCrumb.Item active>Update Transmission</BreadCrumb.Item>
-      </BreadCrumb>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to="/transmissions">Transmissions</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to={`/transmissions/${id}`}>Detail</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Edit</Breadcrumb.Item>
+      </Breadcrumb>
       <h4 className="fw-bold mb-3">Update Transmission</h4>
       <Row className="mt-5">
         <Col md={9}>
@@ -101,7 +107,7 @@ function EditTransmission() {
                       required
                       value={name}
                       onChange={(event) => {
-                        setName(event.target.value)
+                        setName(event.target.value);
                       }}
                     />
                   </Col>
@@ -117,7 +123,7 @@ function EditTransmission() {
                       required
                       value={driveType}
                       onChange={(event) => {
-                        setDriveType(event.target.value)
+                        setDriveType(event.target.value);
                       }}
                     />
                   </Col>
@@ -134,7 +140,7 @@ function EditTransmission() {
                       required
                       value={description}
                       onChange={(event) => {
-                        setDescription(event.target.value)
+                        setDescription(event.target.value);
                       }}
                     />
                   </Col>
@@ -152,5 +158,5 @@ function EditTransmission() {
         </Col>
       </Row>
     </Container>
-  )
+  );
 }
