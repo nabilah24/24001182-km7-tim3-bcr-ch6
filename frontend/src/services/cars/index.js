@@ -1,12 +1,18 @@
-export const getCars = async (nickName) => {
+export const getCars = async (plate, available, availableAt) => {
   const token = localStorage.getItem("token");
   let params;
-  if (nickName) {
-    params.nick_name = nickName;
+  if (plate) {
+    params.plate = plate;
+  }
+  if (available) {
+    params.available = available;
+  }
+  if (availableAt) {
+    params.availableAt = availableAt;
   }
 
   let url =
-    `${import.meta.env.VITE_API_URL}/students` + new URLSearchParams(params);
+    `${import.meta.env.VITE_API_URL}/cars` + new URLSearchParams(params);
 
   const response = await fetch(url, {
     headers: {
@@ -20,10 +26,10 @@ export const getCars = async (nickName) => {
   return result;
 };
 
-export const getDetailStudent = async (id) => {
+export const getCarDetail = async (id) => {
   const token = localStorage.getItem("token");
 
-  let url = `${import.meta.env.VITE_API_URL}/students/${id}`;
+  let url = `${import.meta.env.VITE_API_URL}/cars/${id}`;
 
   const response = await fetch(url, {
     headers: {
@@ -37,19 +43,25 @@ export const getDetailStudent = async (id) => {
   return result;
 };
 
-export const createStudent = async (request) => {
+export const createCar = async (request) => {
   const token = localStorage.getItem("token");
+  const newDate = new Date();
 
   const formData = new FormData();
-  formData.append("name", request.name);
-  formData.append("nick_name", request.nickName);
-  formData.append("class_id", request.classId);
-  formData.append("university_id", request.universityId);
-  if (request.profilePicture) {
-    formData.append("profile_picture", request.profilePicture);
+  formData.append("plate", request.plate);
+  formData.append("modelId", request.modelId);
+  formData.append("typeId", request.typeId);
+  formData.append("description", request.description);
+  formData.append("available", request.available);
+  formData.append("availableAt", newDate.toISOString(request.availableAt));
+  formData.append("options", request.options);
+  formData.append("specs", request.specs);
+
+  if (request.image) {
+    formData.append("image", request.image);
   }
 
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/students`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/cars`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -62,38 +74,41 @@ export const createStudent = async (request) => {
   return result;
 };
 
-export const updateStudent = async (id, request) => {
+export const updateCar = async (id, request) => {
   const token = localStorage.getItem("token");
+  const newDate = new Date();
 
   const formData = new FormData();
-  formData.append("name", request.name);
-  formData.append("nick_name", request.nickName);
-  formData.append("class_id", request.classId);
-  formData.append("university_id", request.universityId);
-  if (request.profilePicture) {
-    formData.append("profile_picture", request.profilePicture);
+  formData.append("plate", request.plate);
+  formData.append("modelId", request.modelId);
+  formData.append("typeId", request.typeId);
+  formData.append("description", request.description);
+  formData.append("available", request.available);
+  formData.append("availableAt", newDate.toISOString(request.availableAt));
+  formData.append("options", request.options);
+  formData.append("specs", request.specs);
+
+  if (request.image) {
+    formData.append("image", request.image);
   }
 
-  const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/students/${id}`,
-    {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-      method: "PUT",
-      body: formData,
-    }
-  );
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/cars/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    method: "PUT",
+    body: formData,
+  });
 
   // get the data if fetching succeed!
   const result = await response.json();
   return result;
 };
 
-export const deleteStudent = async (id) => {
+export const deleteCar = async (id) => {
   const token = localStorage.getItem("token");
 
-  let url = `${import.meta.env.VITE_API_URL}/students/${id}`;
+  let url = `${import.meta.env.VITE_API_URL}/cars/${id}`;
 
   const response = await fetch(url, {
     headers: {

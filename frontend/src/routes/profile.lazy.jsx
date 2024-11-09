@@ -1,9 +1,10 @@
-import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
+import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useSelector } from "react-redux";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import { useEffect } from "react";
+import { Breadcrumb, Container } from "react-bootstrap";
 
 export const Route = createLazyFileRoute("/profile")({
   component: Profile,
@@ -20,17 +21,29 @@ function Profile() {
   }, [navigate, token]);
 
   return (
-    <Row className="mt-5">
-      <Col className="offset-md-3">
-        <Card>
-          <Card.Img variant="top" src={user?.profile_picture} />
-          <Card.Body>
-            <Card.Title>{user?.name}</Card.Title>
-            <Card.Text>{user?.email}</Card.Text>
-          </Card.Body>
-        </Card>
-      </Col>
-      <Col md={3}></Col>
-    </Row>
+    <Container className="my-4 mx-0">
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Profile</Breadcrumb.Item>
+      </Breadcrumb>
+
+      <div>
+        <h4 className="fw-bold">User Profile</h4>
+      </div>
+
+      <Row className="justify-content-center">
+        <Col md={6}>
+          <Card>
+            <Card.Img variant="top" src={user?.profilePicture} />
+            <Card.Body>
+              <Card.Title>{user?.name}</Card.Title>
+              <Card.Text>{user?.email}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }

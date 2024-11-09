@@ -8,9 +8,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../../redux/slices/auth";
 import { profile } from "../../services/auth";
-import SideBar from "../SideBar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
+import { Dropdown, NavItem, NavLink } from "react-bootstrap";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -46,40 +45,48 @@ const NavBar = () => {
   const logout = (event) => {
     event.preventDefault();
 
-    // delete the local storage here
-    dispatch(setUser(null));
-    dispatch(setToken(null));
+    Swal.fire({
+      title: "Confirm to log out",
+      text: "Are you sure you want to log out?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      confirmButtonColor: "#0d6efd",
+      cancelButtonText: "No",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        // delete the local storage here
+        dispatch(setUser(null));
+        dispatch(setToken(null));
 
-    // redirect to login
-    navigate({ to: "/login" });
+        // redirect to login
+        navigate({ to: "/login" });
+      }
+    });
   };
 
   return (
-    <div>
-      <SideBar />
-
+    <>
       <Navbar
         collapseOnSelect
         expand="lg"
         className="bg-body-primary shadow-sm"
       >
         <Container>
-          <div
-            style={{
-              width: "100px",
-              height: "30px",
-              backgroundColor: "#CFD4ED",
-              marginLeft: "6vw",
-            }}
-          ></div>
+          <div className="text-body-secondary fs-4 fw-bold ">
+            BINAR CAR RENTAL
+          </div>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              {/* {user && user?.role_id === 1 && (
-                      <Nav.Link as={Link} to="/students/create">
-                          Create Student
-                      </Nav.Link>
-                  )} */}
+              {/* 
+                {user && user?.role_id === 1 && (
+                  <Nav.Link as={Link} to="/students/create">
+                      Create Student
+                  </Nav.Link>
+                )} 
+              */}
             </Nav>
             <Nav>
               {user ? (
@@ -97,16 +104,19 @@ const NavBar = () => {
                       }}
                     />
                   </Nav.Link>
-                  <NavDropdown title={user?.name} id="nav-dropdown">
-                    <NavDropdown.Item eventKey="4.1">
-                      <Nav.Link as={Link} to="/profile">
-                        Profile
-                      </Nav.Link>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item eventKey="4.1">
-                      <Nav.Link onClick={logout}>Logout</Nav.Link>
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  <Dropdown as={NavItem} id="nav-dropdown">
+                    <Dropdown.Toggle as={NavLink}>{user?.name}</Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        <Nav.Link as={Link} to="/profile">
+                          Profile
+                        </Nav.Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link onClick={logout}>Logout</Nav.Link>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </>
               ) : (
                 <></>
@@ -115,7 +125,7 @@ const NavBar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </div>
+    </>
   );
 };
 
